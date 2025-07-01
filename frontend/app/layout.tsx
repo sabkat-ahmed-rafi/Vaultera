@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { Theme } from "@radix-ui/themes";
+
 import "./globals.css";
+import "@radix-ui/themes/styles.css";
 
 
 
@@ -12,7 +15,9 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        {children}
+        <Theme appearance="dark" grayColor="sage" accentColor="blue">
+          {children}
+        </Theme>
       </body>
     </html>
   );
