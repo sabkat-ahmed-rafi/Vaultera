@@ -1,9 +1,9 @@
-import { Text } from "@radix-ui/themes";
+import Navbar from "@/components/Navbar/Navbar";
 
 export default function Home() {
   return (
     <div>
-      <Text>The quick brown fox jumps over the lazy dog.</Text>
+      <Navbar />
     </div>
   );
 }
