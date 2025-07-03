@@ -107,7 +107,7 @@ const Page = () => {
 
           </Box>
 
-          <p className='text-center pt-5 md:pt-0 md:pb-5 italic md:text-[15px]'>Already have an account? <Link href={'/sign-in'}>Login</Link></p>
+          <p className='text-center pt-5 md:pt-0 md:pb-5 italic md:text-[15px]'>Already have an account? <Link className='font-semibold underline text-blue-400' href={'/sign-in'}>Log in</Link></p>
 
         </form>
     </section>

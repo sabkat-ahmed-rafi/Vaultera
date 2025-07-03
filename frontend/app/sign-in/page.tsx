@@ -101,7 +101,7 @@ const SignIn = () => {
 
           </Box>
 
-          <p className='text-center pt-5 md:pt-0 md:pb-5 italic md:text-[15px]'>Don't have an account? <Link className='hover:text-blue-400 hover:underline transition-all' href={'/sign-up'}>Create one</Link></p>
+          <p className='text-center pt-5 md:pt-0 md:pb-5 italic md:text-[15px]'>Don't have an account? <Link className='text-blue-400 underline font-semibold' href={'/sign-up'}>Create one</Link></p>
 
         </form>
     </section>
