@@ -99,6 +99,7 @@ const Page = () => {
               </TextField.Root>
             </Box>
 
+            {/* Form submit button */}
             <div className='mt-5 flex justify-end'>
               <Button type='submit' size='2' variant="classic" color='gray' highContrast>Sign up</Button>
             </div>
