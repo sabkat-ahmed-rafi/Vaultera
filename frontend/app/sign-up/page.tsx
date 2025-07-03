@@ -8,6 +8,7 @@ import { FaUser } from "react-icons/fa";
 import { IoIosInformationCircle } from "react-icons/io";
 import { useState } from 'react';
 import Logo from '@/components/Logo/Logo';
+import Link from 'next/link';
 
 const Page = () => {
   const [visiblePass, setVisiblePass] = useState<"password" | "text">("password");
@@ -98,14 +99,14 @@ const Page = () => {
               </TextField.Root>
             </Box>
 
-            <div className='mt-5 flex md:justify-end'>
+            <div className='mt-5 flex justify-end'>
               <Button type='submit' size='2' variant="classic" color='gray' highContrast>Sign up</Button>
             </div>
             
 
           </Box>
 
-          <p className='text-center pt-5 md:pt-0 md:pb-5 italic md:text-[15px]'>Already have an account? Login</p>
+          <p className='text-center pt-5 md:pt-0 md:pb-5 italic md:text-[15px]'>Already have an account? <Link href={'/sign-in'}>Login</Link></p>
 
         </form>
     </section>
