@@ -1,1 +1,1 @@
-* Now I have to make the register and sign in page to start the authentication process.
+* Now I have to the authentication functionality.
