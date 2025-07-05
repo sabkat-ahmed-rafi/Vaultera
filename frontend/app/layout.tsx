@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
 
-
+import ReduxProvider from "@/redux/ReduxProvider";
 
 export const metadata: Metadata = {
   title: "Vaultera",
@@ -16,10 +16,12 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <Theme appearance="dark" grayColor="sage" accentColor="blue">
-          {children}
-          <Toaster position="bottom-right" />
-        </Theme>
+        <ReduxProvider>
+          <Theme appearance="dark" grayColor="sage" accentColor="blue">
+            {children}
+            <Toaster position="bottom-right" />
+          </Theme>
+        </ReduxProvider>
       </body>
     </html>
   );
