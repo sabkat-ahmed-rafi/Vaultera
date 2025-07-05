@@ -1,8 +1,8 @@
 // utils/mapUser.ts
-import { User } from "firebase/auth";
-import { AuthUserData } from "@/types/User";
+import { User as FirebaseUser } from "firebase/auth";
+import { User } from "@/types/User";
 
-export const mapFirebaseUser = (user: User): AuthUserData => ({
+export const mapFirebaseUser = (user: FirebaseUser): User => ({
   uid: user.uid,
   email: user.email,
   displayName: user.displayName,

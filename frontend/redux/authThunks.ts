@@ -1,13 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import auth from "../firebase/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
-import { AuthUserData, UpdateUserPayload } from "@/types/User";
+import { User } from "@/types/User";
 import { mapFirebaseUser } from "@/utils/mapUser";
-import { AuthPayload } from "@/types/Auth";
 
+
+export interface AuthPayload {
+  email: string;
+  password: string;
+}
+
+export interface UpdateUserPayload {
+  name?: string | null;
+}
 
 // Create a user
-export const createUser = createAsyncThunk<AuthUserData | void, AuthPayload>(
+export const createUser = createAsyncThunk<User | void, AuthPayload>(
   "auth/createUser",
   async ({ email, password }) => {
     try {
@@ -19,7 +27,7 @@ export const createUser = createAsyncThunk<AuthUserData | void, AuthPayload>(
   }
 );
 
-export const updateUser = createAsyncThunk<AuthUserData, UpdateUserPayload>(
+export const updateUser = createAsyncThunk<User, UpdateUserPayload>(
   "auth/updateUser",
   async ({ name = null}) => {
     const updateData: { displayName?: string | null } = {};
@@ -40,7 +48,7 @@ export const updateUser = createAsyncThunk<AuthUserData, UpdateUserPayload>(
   }
 );
 
-export const loginUser = createAsyncThunk<AuthUserData | void, AuthPayload>(
+export const loginUser = createAsyncThunk<User | void, AuthPayload>(
   "auth/loginUser",
   async ({ email, password }) => {
     try {
