@@ -36,7 +36,7 @@ const SignIn = () => {
             {/* Password Field */}
             <Box>
               <Text as="label" size="2" mb="1" weight="bold">Password</Text>
-              <TextField.Root placeholder="Create password" size="3" type={visiblePass}>
+              <TextField.Root placeholder="Enter password" size="3" type={visiblePass}>
                 <TextField.Slot>
                   <RiLock2Fill height="16" width="16" />
                 </TextField.Slot>
@@ -71,7 +71,7 @@ const SignIn = () => {
                   <IoIosInformationCircle size={12} />
                 </Tooltip>
               </Text>
-              <TextField.Root placeholder="Create master key" size="3" type={visibleKey}>
+              <TextField.Root placeholder="Enter master key" size="3" type={visibleKey}>
                 <TextField.Slot>
                   <IoKey height="16" width="16" />
                 </TextField.Slot>
