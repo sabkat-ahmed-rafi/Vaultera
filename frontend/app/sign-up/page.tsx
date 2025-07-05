@@ -10,6 +10,8 @@ import { useState } from 'react';
 import Logo from '@/components/Logo/Logo';
 import Link from 'next/link';
 import { useForm, SubmitHandler } from "react-hook-form";
+import toast from 'react-hot-toast';
+import { validateRegisterForm } from '@/lib/validation/validateRegisterForm';
 
 type Inputs = {
   name: string
@@ -25,12 +27,7 @@ const Page = () => {
   const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const nameRegex = /^[A-Za-z\s]+$/;
-
-    if (!nameRegex.test(data.name)) {
-      console.log("Invalid name: only letters and spaces are allowed");
-      return;
-    }
+    if (!validateRegisterForm(data)) return;
   }
 
   return (
