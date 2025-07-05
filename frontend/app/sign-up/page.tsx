@@ -9,35 +9,50 @@ import { IoIosInformationCircle } from "react-icons/io";
 import { useState } from 'react';
 import Logo from '@/components/Logo/Logo';
 import Link from 'next/link';
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type Inputs = {
+  name: string
+  email: string
+  password: string
+  masterKey: string
+}
 
 const Page = () => {
+
   const [visiblePass, setVisiblePass] = useState<"password" | "text">("password");
   const [visibleKey, setVisibleKey] = useState<"password" | "text">("password");
+  const { register, handleSubmit } = useForm<Inputs>();
 
-  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const nameRegex = /^[A-Za-z\s]+$/;
+
+    if (!nameRegex.test(data.name)) {
+      console.log("Invalid name: only letters and spaces are allowed");
+      return;
+    }
+  }
 
   return (
     <section className='flex justify-center items-center min-h-screen md:my-10 xl:my-0'>
-        <form onSubmit={handleRegister} className='md:shadow-slate-500 md:shadow-sm md:rounded-xl' >
+        <form onSubmit={handleSubmit(onSubmit)} className='md:shadow-slate-500 md:shadow-sm md:rounded-xl' >
           <Box className='md:p-10 space-y-2  md:w-[500px]'>
             <Logo />
             
             {/* Name Field */}
             <Box>
               <Text as="label" size="2" mb="1" weight="bold">Full Name</Text>
-              <TextField.Root placeholder="John Doe" size="3">
+              <TextField.Root {...register("name", { required: true })} placeholder="John Doe" size="3">
                 <TextField.Slot>
                   <FaUser height="16" width="16" />
                 </TextField.Slot>
               </TextField.Root>
             </Box>
-
+            
             {/* Email Field */}
             <Box>
               <Text as="label" size="2" mb="1" weight="bold">Email</Text>
-              <TextField.Root placeholder="you@example.com" size="3">
+              <TextField.Root {...register("email", { required: true })} placeholder="you@example.com" type='email' size="3">
                 <TextField.Slot>
                   <MdEmail height="16" width="16" />
                 </TextField.Slot>
@@ -47,7 +62,7 @@ const Page = () => {
             {/* Password Field */}
             <Box>
               <Text as="label" size="2" mb="1" weight="bold">Password</Text>
-              <TextField.Root placeholder="Create password" size="3" type={visiblePass}>
+              <TextField.Root {...register("password", { required: true })} placeholder="Create password" size="3" type={visiblePass}>
                 <TextField.Slot>
                   <RiLock2Fill height="16" width="16" />
                 </TextField.Slot>
@@ -77,7 +92,7 @@ const Page = () => {
                   <IoIosInformationCircle size={12} />
                 </Tooltip>
               </Text>
-              <TextField.Root placeholder="Create master key" size="3" type={visibleKey}>
+              <TextField.Root {...register("masterKey", { required: true })} placeholder="Create master key" size="3" type={visibleKey}>
                 <TextField.Slot>
                   <IoKey height="16" width="16" />
                 </TextField.Slot>
