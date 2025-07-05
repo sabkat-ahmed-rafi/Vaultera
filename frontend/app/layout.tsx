@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Theme } from "@radix-ui/themes";
+import { Toaster } from 'react-hot-toast';
 
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
@@ -17,6 +18,7 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
       <body className={`antialiased`}>
         <Theme appearance="dark" grayColor="sage" accentColor="blue">
           {children}
+          <Toaster position="bottom-right" />
         </Theme>
       </body>
     </html>
