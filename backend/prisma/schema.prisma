@@ -15,9 +15,9 @@ datasource db {
 
 model User {
   id                String  @id @default(uuid())  // Internal UUID
-  uid               String  @unique               // Public user ID (e.g. user_123)
-  email             String   @unique              // User's email
-  name              String?                       // Optional display name
+  uid               String  @unique               // Public user ID 
+  email             String  @unique               // User's email
+  name              String?                       // User's name
 
   salt              String                        // 32-byte base64-encoded salt
   iv                String                        // 12-byte IV (base64 or utf-8)
