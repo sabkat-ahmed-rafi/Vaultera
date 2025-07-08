@@ -10,7 +10,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
 
     const isExist = await getUserByEmail({ email: userData.email });
     if (isExist) {
-      res.status(201).json({ message: "User already exists" });
+      res.status(500).json( "User already exists" );
       return;
     }
 
