@@ -15,7 +15,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       return;
     }
 
-    const hashedPassword = hashPassword(userData.password);
+    const hashedPassword = await hashPassword(userData.password);
     userData.password = hashedPassword;
 
     const newUser = await addUser(userData);
