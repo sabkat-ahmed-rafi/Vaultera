@@ -31,9 +31,9 @@ export const createUser = createAsyncThunk<User, CreateUserPayload>(
   async (payload, { rejectWithValue }) => {
     try {
       const res = await axios.post(`${backendUrl}/api/sign-up`, payload);
-      return mapUser(res.data); 
+      return mapUser(res.data.newUser); 
     } catch (error: any) {
-      console.log(error);
+      console.log(error)
       return rejectWithValue(error?.response?.data || "Registration failed");
     }
   }
