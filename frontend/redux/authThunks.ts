@@ -3,7 +3,7 @@ import { User } from "@/types/User";
 import { mapUser } from "@/utils/mapUser";
 import axios from "axios";
 
-
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND;
 
 interface CreateUserPayload {
   email: string;
@@ -30,7 +30,7 @@ export const createUser = createAsyncThunk<User, CreateUserPayload>(
   "auth/createUser",
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await axios.post("/api/sign-up", payload);
+      const res = await axios.post(`${backendUrl}/api/sign-up`, payload);
       return mapUser(res.data); 
     } catch (error: any) {
       console.log(error);
@@ -44,7 +44,7 @@ export const loginUser = createAsyncThunk<User, LoginPayload>(
   "auth/loginUser",
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await axios.post("/api/sign-in", payload);
+      const res = await axios.post(`${backendUrl}/api/sign-in`, payload);
       return mapUser(res.data); 
     } catch (error: any) {
       console.error(error);
@@ -57,7 +57,7 @@ export const updateUser = createAsyncThunk<User , UpdateUserPayload>(
   "auth/updateUser",
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await axios.put("/api/update-user", payload);
+      const res = await axios.put(`${backendUrl}/api/update-user`, payload);
       return mapUser(res.data);
     } catch (error: any) {
       console.error(error);
@@ -70,7 +70,7 @@ export const logout = createAsyncThunk<void>(
   "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      await axios.post("/api/logout");
+      await axios.post(`${backendUrl}/api/logout`);
     } catch (error: any) {
       console.error(error);
       return rejectWithValue(error.response?.data || "Failed to logout");
