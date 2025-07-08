@@ -23,7 +23,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 
-const getUser = async (req: Request, res: Response, next: NextFunction) => {
+const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userData = req.body;
     const user = await getUserByEmail({ email: userData.email });
@@ -40,5 +40,5 @@ const getUser = async (req: Request, res: Response, next: NextFunction) => {
 
 export { 
   createUser,
-  getUser
+  loginUser
  }
