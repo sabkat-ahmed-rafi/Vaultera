@@ -10,6 +10,9 @@ import Logo from '@/components/Logo/Logo';
 import Link from 'next/link';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { validateLoginForm } from '@/lib/validation/validateLoginForm';
+import { useAppDispatch } from '@/redux/hooks';
+import { loginUser } from '@/redux/authThunks';
+import toast from 'react-hot-toast';
 
 
 type Inputs = {
@@ -22,9 +25,26 @@ const SignIn = () => {
   const [visiblePass, setVisiblePass] = useState<"password" | "text">("password");
   const [visibleKey, setVisibleKey] = useState<"password" | "text">("password");
   const { register, handleSubmit } = useForm<Inputs>();
+  const dispatch = useAppDispatch()
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // if(!validateLoginForm(data)) return;
+    
+    try {
+      // if(!validateLoginForm(data)) return;
+
+      const testUser = {
+        email: data.email,
+        password: data.password,
+      }
+
+      const user = await dispatch(loginUser(testUser)).unwrap();
+      console.log(user);
+    } catch (error) {
+      if (typeof error === "string") {
+        toast.error(error);
+      };
+    }
+
   };
 
   return (
