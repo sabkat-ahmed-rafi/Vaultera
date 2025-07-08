@@ -1,64 +1,58 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import auth from "../firebase/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { User } from "@/types/User";
-import { mapFirebaseUser } from "@/utils/mapUser";
+import { mapUser } from "@/utils/mapUser";
 
 
-export interface AuthPayload {
+
+export interface CreateUserPayload {
+  email: string;
+  name: string;
+  photo: string;
+  password: string;
+  salt: string;              // base64
+  iv: string;                // base64
+  encryptedVaultKey: string; // base64
+}
+
+interface LoginPayload {
   email: string;
   password: string;
 }
 
 export interface UpdateUserPayload {
   name?: string | null;
+  photo?: string | null;
 }
 
 // Create a user
-export const createUser = createAsyncThunk<User | void, AuthPayload>(
+export const createUser = createAsyncThunk<void , CreateUserPayload>(
   "auth/createUser",
-  async ({ email, password }) => {
+  async ({ email, name, photo, password, salt, iv, encryptedVaultKey }) => {
     try {
-      const { user } = await createUserWithEmailAndPassword(auth, email, password);
-      return mapFirebaseUser(user);
+            
     } catch (error) {
       console.log(error)
     }
   }
 );
 
-export const updateUser = createAsyncThunk<User, UpdateUserPayload>(
-  "auth/updateUser",
-  async ({ name = null}) => {
-    const updateData: { displayName?: string | null } = {};
 
-    if (name) updateData.displayName = name;
-
-    const currentUser = auth.currentUser;
-    if (!currentUser) {
-      throw new Error("No authenticated user found.");
-    }
-    await updateProfile(currentUser, updateData);
-
-    return {
-      uid: currentUser.uid,
-      email: currentUser.email,
-      displayName: currentUser.displayName,
-    };
-  }
-);
-
-export const loginUser = createAsyncThunk<User | void, AuthPayload>(
+export const loginUser = createAsyncThunk<void, LoginPayload>(
   "auth/loginUser",
   async ({ email, password }) => {
     try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      return mapFirebaseUser(user);
+      
     } catch (error) {
-      if (error) {
         console.log(error)
-      }
+
     }
+  }
+);
+
+export const updateUser = createAsyncThunk<void , UpdateUserPayload>(
+  "auth/updateUser",
+  async ({ name = null, photo = null}) => {
+    
   }
 );
 
@@ -66,7 +60,7 @@ export const logout = createAsyncThunk<void>(
   "auth/logout",
   async () => {
     try {
-      await signOut(auth);
+      
     } catch (error) {
       console.log(error);
     }
