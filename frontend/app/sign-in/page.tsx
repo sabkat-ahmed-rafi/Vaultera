@@ -37,8 +37,8 @@ const SignIn = () => {
         password: data.password,
       }
 
-      const user = await dispatch(loginUser(testUser)).unwrap();
-      console.log(user);
+      await dispatch(loginUser(testUser)).unwrap();
+      
     } catch (error) {
       if (typeof error === "string") {
         toast.error(error);
