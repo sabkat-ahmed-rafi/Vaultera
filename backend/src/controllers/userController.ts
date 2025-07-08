@@ -27,6 +27,10 @@ const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userData = req.body;
     const user = await getUserByEmail({ email: userData.email });
+    if (!user) {
+      res.status(500).json( "User not found" );
+      return;
+    }
     res.status(201).json({ message: "User found", user });
   } catch (error: any) {
     next(error);
