@@ -12,6 +12,8 @@ import Link from 'next/link';
 import { useForm, SubmitHandler } from "react-hook-form";
 import toast from 'react-hot-toast';
 import { validateRegisterForm } from '@/lib/validation/validateRegisterForm';
+import { useAppDispatch } from '@/redux/hooks';
+import { createUser } from '@/redux/authThunks';
 
 type Inputs = {
   name: string
@@ -20,15 +22,37 @@ type Inputs = {
   masterKey: string
 }
 
-const Page = () => {
+const SignUp = () => {
 
   const [visiblePass, setVisiblePass] = useState<"password" | "text">("password");
   const [visibleKey, setVisibleKey] = useState<"password" | "text">("password");
   const { register, handleSubmit } = useForm<Inputs>();
+  const dispatch = useAppDispatch()
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (!validateRegisterForm(data)) return;
-  }
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    
+    try {
+      // if (!validateRegisterForm(data)) return;
+
+      const testUser = {
+        email: data.email,
+        name: data.name,
+        photo: '',
+        password: data.password,
+        salt: "salt",
+        iv: "iv",
+        encryptedVaultKey: "valutkey" 
+      }
+
+      await dispatch(createUser(testUser)).unwrap();
+      
+    } catch (error) {
+      if (typeof error === "string") {
+        toast.error(error);
+      };
+    }
+
+  };
 
   return (
     <section className='flex justify-center items-center min-h-screen md:my-10 xl:my-0'>
@@ -126,4 +150,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default SignUp;
