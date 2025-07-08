@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { User } from "@/types/User";
 import { mapUser } from "@/utils/mapUser";
+import axios from "axios";
 
 
 
-export interface CreateUserPayload {
+interface CreateUserPayload {
   email: string;
   name: string;
   photo: string;
@@ -19,50 +20,60 @@ interface LoginPayload {
   password: string;
 }
 
-export interface UpdateUserPayload {
+interface UpdateUserPayload {
   name?: string | null;
   photo?: string | null;
 }
 
 // Create a user
-export const createUser = createAsyncThunk<void , CreateUserPayload>(
+export const createUser = createAsyncThunk<User, CreateUserPayload>(
   "auth/createUser",
-  async ({ email, name, photo, password, salt, iv, encryptedVaultKey }) => {
+  async (payload, { rejectWithValue }) => {
     try {
-            
-    } catch (error) {
-      console.log(error)
+      const res = await axios.post("/api/sign-up", payload);
+      return mapUser(res.data); 
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error?.response?.data || "Registration failed");
     }
   }
 );
 
 
-export const loginUser = createAsyncThunk<void, LoginPayload>(
+export const loginUser = createAsyncThunk<User, LoginPayload>(
   "auth/loginUser",
-  async ({ email, password }) => {
+  async (payload, { rejectWithValue }) => {
     try {
-      
-    } catch (error) {
-        console.log(error)
-
+      const res = await axios.post("/api/sign-in", payload);
+      return mapUser(res.data); 
+    } catch (error: any) {
+      console.error(error);
+      return rejectWithValue(error.response?.data || "Failed to login");
     }
   }
 );
 
-export const updateUser = createAsyncThunk<void , UpdateUserPayload>(
+export const updateUser = createAsyncThunk<User , UpdateUserPayload>(
   "auth/updateUser",
-  async ({ name = null, photo = null}) => {
-    
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await axios.put("/api/update-user", payload);
+      return mapUser(res.data);
+    } catch (error: any) {
+      console.error(error);
+      return rejectWithValue(error.response?.data || "Failed to update user");
+    }
   }
 );
 
 export const logout = createAsyncThunk<void>(
   "auth/logout",
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
-      
-    } catch (error) {
-      console.log(error);
+      await axios.post("/api/logout");
+    } catch (error: any) {
+      console.error(error);
+      return rejectWithValue(error.response?.data || "Failed to logout");
     }
   }
 );
