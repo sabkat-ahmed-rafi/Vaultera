@@ -7,7 +7,7 @@ const getUserByEmail = async ({ email }: GetUserByEmailProp) => {
   });
 };
 
-const createUser = async (userData: UserData) => {
+const addUser = async (userData: UserData) => {
   return await prisma.user.create({
     data: userData,
   });
@@ -15,6 +15,6 @@ const createUser = async (userData: UserData) => {
 
 export {
   getUserByEmail,
-  createUser,
+  addUser,
 };
 
