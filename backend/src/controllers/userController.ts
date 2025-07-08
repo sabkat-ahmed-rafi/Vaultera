@@ -22,4 +22,19 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { createUser }
+
+const getUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userData = req.body;
+    const user = await getUserByEmail({ email: userData.email });
+    res.status(201).json({ message: "User found", user });
+  } catch (error: any) {
+    next(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export { 
+  createUser,
+  getUser
+ }
