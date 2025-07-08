@@ -33,7 +33,6 @@ export const createUser = createAsyncThunk<User, CreateUserPayload>(
       const res = await axios.post(`${backendUrl}/api/sign-up`, payload);
       return mapUser(res.data.newUser); 
     } catch (error: any) {
-      console.log(error)
       return rejectWithValue(error?.response?.data || "Registration failed");
     }
   }
@@ -45,9 +44,8 @@ export const loginUser = createAsyncThunk<User, LoginPayload>(
   async (payload, { rejectWithValue }) => {
     try {
       const res = await axios.post(`${backendUrl}/api/sign-in`, payload);
-      return mapUser(res.data); 
+      return mapUser(res.data.user); 
     } catch (error: any) {
-      console.error(error);
       return rejectWithValue(error.response?.data || "Failed to login");
     }
   }
