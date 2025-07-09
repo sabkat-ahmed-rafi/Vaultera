@@ -13,9 +13,10 @@ export interface GetUserByEmailProp {
     email: string
 }
 
-export interface jwtUser { 
+export interface JwtUser { 
   id: string | null;
   email: string | null;
   name: string | null;
   photo: string | null;
+  [key: string]: unknown;
 }
