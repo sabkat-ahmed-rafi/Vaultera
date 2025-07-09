@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { config } from "../config/config";
 import { jwtVerify } from "jose";
+import { JwtUser } from "../types/types";
 
 
 
@@ -15,7 +16,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
 
         const { payload } = await jwtVerify(token, secret);
 
-        req.user = payload;
+        req.user = payload as JwtUser;
         next();
 
     } catch (error: any) {
