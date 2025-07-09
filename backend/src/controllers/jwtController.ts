@@ -18,3 +18,20 @@ export const setJwt = async (req: Request, res: Response, next: NextFunction) =>
         });
     }
 }
+
+export const removeJwt = async (_: Request, res: Response, next: NextFunction) => {
+    try {
+        res.clearCookie('token', {
+           maxAge: 0,
+           secure: process.env.NODE_ENV === "production",
+           sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+        }).status(200).json({ success: true });
+
+    } catch (error) {
+        next(error);
+        res.status(500).json({
+           success: false,
+           message: "Internal server error while removing JWT",
+        });
+    }
+}
