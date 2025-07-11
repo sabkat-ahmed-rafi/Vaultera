@@ -8,6 +8,7 @@ export const setJwt = async (req: Request, res: Response, next: NextFunction) =>
            httpOnly: true,
            secure: process.env.NODE_ENV === "production",
            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+           maxAge: 60 * 60 * 1000
         }).status(200).json({ success: true });
 
     } catch (error) {
