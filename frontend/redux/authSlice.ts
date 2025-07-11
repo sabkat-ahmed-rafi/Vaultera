@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createUser, loginUser, logout, updateUser } from "./authThunks";
+import { checkAuthSession, createUser, loginUser, logout, updateUser } from "./authThunks";
 import { User } from "@/types/User";
 
 
@@ -73,6 +73,18 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(logout.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // Check Auth Session
+      .addCase(checkAuthSession.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(checkAuthSession.fulfilled, (state, action) => {
+        state.user = action.payload; 
+        state.loading = false;
+      })
+      .addCase(checkAuthSession.rejected, (state) => {
         state.loading = false;
       });
     },
