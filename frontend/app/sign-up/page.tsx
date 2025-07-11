@@ -54,7 +54,6 @@ const SignUp = () => {
          photo: user.photo
         });
       }
-      console.log(user)
       
     } catch (error) {
       if (typeof error === "string") {
