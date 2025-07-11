@@ -75,3 +75,18 @@ export const logout = createAsyncThunk<void>(
     }
   }
 );
+
+
+export const checkAuthSession = createAsyncThunk<User | null>(
+  "auth/checkAuthSession",
+  async () => {
+    try {
+      const res = await axios.get(`${backendUrl}/api/session`, {
+        withCredentials: true
+      });
+      return mapUser(res.data.user);
+    } catch (error) {
+      return null;
+    }
+  }
+);
