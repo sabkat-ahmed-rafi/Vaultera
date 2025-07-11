@@ -9,7 +9,8 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
     try {
         const token = req.cookies.token;
         if (!token) {
-          return res.status(401).json({ message: "Token missing" });
+          res.status(401).json({ message: "Token missing" });
+          return;
         };
 
         const secret = new TextEncoder().encode(config.jwt_secret);
@@ -21,8 +22,9 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
 
     } catch (error: any) {
         if (error.name === "JWTExpired") {
-          return res.status(401).json({ error: "sessionExpired" });
+          res.status(401).json({ error: "sessionExpired" });
+          return;
         }
-        return res.status(401).json({ message: "unauthorized access" });
+        res.status(401).json({ message: "unauthorized access" });
     }
 }
