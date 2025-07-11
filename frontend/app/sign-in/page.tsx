@@ -13,6 +13,7 @@ import { validateLoginForm } from '@/lib/validation/validateLoginForm';
 import { useAppDispatch } from '@/redux/hooks';
 import { loginUser } from '@/redux/authThunks';
 import toast from 'react-hot-toast';
+import { setTokenInCookies } from '@/utils/setJwt';
 
 
 type Inputs = {
@@ -37,7 +38,15 @@ const SignIn = () => {
         password: data.password,
       }
 
-      await dispatch(loginUser(testUser)).unwrap();
+      const user = await dispatch(loginUser(testUser)).unwrap();
+      if(user) {
+        await setTokenInCookies({
+         id: user.id!,
+         email: user.email!,
+         name: user.name!,
+         photo: user.photo
+        });
+      }
       
     } catch (error) {
       if (typeof error === "string") {
