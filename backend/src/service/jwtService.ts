@@ -1,11 +1,11 @@
 import { GetUserByEmailProp, JwtUser } from "../types/types";
 import { config } from "../config/config";
 import { prisma } from "../config/prismaClient";
+import { SignJWT } from "jose";
 
 
 
 export const generateJwtToken = async (user: JwtUser): Promise<string> => {
-  const { SignJWT } = await import("jose");
   if (!user) {
       throw new Error("Invalid user object");
     }
