@@ -1,6 +1,7 @@
 import { SignJWT } from "jose";
-import { JwtUser } from "../types/types";
+import { GetUserByEmailProp, JwtUser } from "../types/types";
 import { config } from "../config/config";
+import { prisma } from "../config/prismaClient";
 
 
 
@@ -19,4 +20,10 @@ export const generateJwtToken = async (user: JwtUser): Promise<string> => {
     .setProtectedHeader({ alg: "HS256" })
     .setExpirationTime("1h")
     .sign(secret)
+}
+
+export const checkAuthUser = async ({ email }: GetUserByEmailProp) => {
+  return await prisma.user.findUnique({
+    where: { email },
+  });
 }
