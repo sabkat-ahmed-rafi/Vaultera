@@ -14,6 +14,7 @@ import toast from 'react-hot-toast';
 import { validateRegisterForm } from '@/lib/validation/validateRegisterForm';
 import { useAppDispatch } from '@/redux/hooks';
 import { createUser } from '@/redux/authThunks';
+import { setTokenInCookies } from '@/utils/setJwt';
 
 type Inputs = {
   name: string
@@ -44,7 +45,16 @@ const SignUp = () => {
         encryptedVaultKey: "valutkey" 
       }
 
-      await dispatch(createUser(testUser)).unwrap();
+      const user = await dispatch(createUser(testUser)).unwrap();
+      if(user) {
+        await setTokenInCookies({
+         id: user.id!,
+         email: user.email!,
+         name: user.name!,
+         photo: user.photo
+        });
+      }
+      console.log(user)
       
     } catch (error) {
       if (typeof error === "string") {
