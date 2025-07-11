@@ -1,1 +1,6 @@
-* Now I have to the authentication functionality.
+===============
+TODO
+===============
+
+* I have to use protected route only for when user login to his vault.
+* I have to use axiosSecure only after user logs in.
