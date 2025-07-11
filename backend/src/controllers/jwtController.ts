@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { generateJwtToken } from "../service/jwtService";
+import { checkAuthUser, generateJwtToken } from "../service/jwtService";
 
 export const setJwt = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -32,6 +32,23 @@ export const removeJwt = async (_: Request, res: Response, next: NextFunction) =
         res.status(500).json({
            success: false,
            message: "Internal server error while removing JWT",
+        });
+    }
+}
+
+export const checkSession = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await checkAuthUser({ email: req.user?.email ?? "" });
+        if(!user) {
+            res.status(500).json( "User not found" );
+            return;
+        }
+        res.status(201).json({ message: "User found", user });
+    } catch (error) {
+        next(error);
+        res.status(500).json({
+           success: false,
+           message: "Internal server error while checking user",
         });
     }
 }
