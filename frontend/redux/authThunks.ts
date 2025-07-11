@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { User } from "@/types/User";
 import { mapUser } from "@/utils/mapUser";
 import axios from "axios";
+import { setLoading } from "./authSlice";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND;
 
@@ -79,13 +80,18 @@ export const logout = createAsyncThunk<void>(
 
 export const checkAuthSession = createAsyncThunk<User | null>(
   "auth/checkAuthSession",
-  async () => {
+  async (_, { dispatch }) => {
+    dispatch(setLoading(true));
     try {
       const res = await axios.get(`${backendUrl}/api/session`, {
         withCredentials: true
       });
+      if(res.data.user) {
+        dispatch(setLoading(false));
+      }
       return mapUser(res.data.user);
     } catch (error) {
+      dispatch(setLoading(false));
       return null;
     }
   }
