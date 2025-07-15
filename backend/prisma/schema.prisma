@@ -14,15 +14,25 @@ datasource db {
 
 
 model User {
-  id                String  @id @default(uuid())  // Internal UUID
-  email             String  @unique               // User's email
-  password          String                        // Auth password
-  name              String?                       // User's name
-  photo             String?                       // User's photo
+  // User info
+  id                     String    @id @default(uuid())  // Internal UUID
+  email                  String    @unique               // User's email
+  password               String                          // Auth password
+  name                   String?                         // User's name
+  photo                  String?                         // User's photo
 
-  salt              String                        // 32-byte base64-encoded salt
-  iv                String                        // 12-byte IV (base64 or utf-8)
-  encryptedVaultKey String                        // Encrypted vault key (base64)
+  salt                   String                          // 32-byte base64-encoded salt
+  iv                     String                          // 12-byte IV (base64 or utf-8)
+  encryptedVaultKey      String                          // Encrypted vault key (base64)
+
+  // User payment info
+  paid                   Boolean   @default(false)
+  paymentType            String?                         // 'subscription' | 'one_time'
+  paddleCustomerId       String?                         // Paddle user ID
+  paddleSubscriptionId   String?                         // Only for subscription
+  subscriptionStatus     String?                         // 'active', 'canceled', etc.
+  paymentExpiresAt       DateTime?                       // Next billing or expiry date
+
 
   
   createdAt         DateTime @default(now())
