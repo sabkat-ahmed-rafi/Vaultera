@@ -14,7 +14,7 @@ const addUser = async (userData: UserData) => {
 };
 
 const getUserVaultInfo = async ({ email }: GetUserByEmailProp) => {
-  const userVault = await prisma.user.findUnique({
+  return await prisma.user.findUnique({
   where: { email },
   select: {
     salt: true,
