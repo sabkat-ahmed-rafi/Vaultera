@@ -13,8 +13,20 @@ const addUser = async (userData: UserData) => {
   });
 };
 
+const getUserVaultInfo = async ({ email }: GetUserByEmailProp) => {
+  const userVault = await prisma.user.findUnique({
+  where: { email },
+  select: {
+    salt: true,
+    iv: true,
+    encryptedVaultKey: true,
+  },
+});
+}
+
 export {
   getUserByEmail,
   addUser,
+  getUserVaultInfo
 };
 
