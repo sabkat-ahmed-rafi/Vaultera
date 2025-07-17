@@ -4,9 +4,9 @@ import { verifyToken } from "../middleware/verifyToken";
 
 const router = Router();
 
-router.post('/set-jwt', setJwt);
-router.post('/remove-jwt', removeJwt);
-router.get('/session', verifyToken, checkSession)
+router.post('/auth/set-jwt', setJwt);
+router.post('/auth/remove-jwt', removeJwt);
+router.get('/auth/session', verifyToken, checkSession);
 
 
 export default router;

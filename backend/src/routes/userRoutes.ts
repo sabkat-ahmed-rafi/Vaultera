@@ -3,8 +3,8 @@ import { checkUserVaultKeyInfo, createUser, loginUser } from "../controllers/use
 
 const router = Router();
 
-router.post('/sign-up', createUser);
-router.post('/sign-in', loginUser);
+router.post('/auth/sign-up', createUser);
+router.post('/auth/sign-in', loginUser);
 router.get('/users/:email/vault-key-info', checkUserVaultKeyInfo);
 
 
