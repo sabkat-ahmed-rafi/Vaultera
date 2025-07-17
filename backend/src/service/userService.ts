@@ -13,7 +13,7 @@ const addUser = async (userData: UserData) => {
   });
 };
 
-const getUserVaultInfo = async ({ email }: GetUserByEmailProp) => {
+const getUserVaultKeyInfo = async ({ email }: GetUserByEmailProp) => {
   return await prisma.user.findUnique({
   where: { email },
   select: {
@@ -27,6 +27,6 @@ const getUserVaultInfo = async ({ email }: GetUserByEmailProp) => {
 export {
   getUserByEmail,
   addUser,
-  getUserVaultInfo
+  getUserVaultKeyInfo
 };
 

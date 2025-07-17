@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { Request, Response, NextFunction } from 'express';
-import { getUserByEmail, addUser, getUserVaultInfo } from '../service/userService';
+import { getUserByEmail, addUser, getUserVaultKeyInfo } from '../service/userService';
 import { hashPassword } from '../utils/hashPassword';
 
 
@@ -55,7 +55,7 @@ const checkUserVaultKeyInfo = async (req: Request, res: Response, next: NextFunc
       return;
     }
 
-    const vaultKeyInfo = await getUserVaultInfo({ email });
+    const vaultKeyInfo = await getUserVaultKeyInfo({ email });
 
     if (!vaultKeyInfo) {
       res.status(404).json({ error: 'Vault key info not found' });
