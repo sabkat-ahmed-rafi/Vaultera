@@ -1,6 +1,12 @@
 import { Router } from "express";
-import { checkUserVaultKeyInfo, createUser, loginUser } from "../controllers/authController";
-import { checkSession, removeJwt, setJwt } from "../controllers/jwtController";
+import { 
+    checkUserVaultKeyInfo,
+    createUser,
+    loginUser,
+    checkSession,
+    removeJwt,
+    setJwt 
+} from "../controllers/authController";
 import { verifyToken } from "../middleware/verifyToken";
 
 const router = Router();
