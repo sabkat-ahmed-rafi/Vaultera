@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { Request, Response, NextFunction } from 'express';
-import { getUserByEmail, addUser, getUserVaultKeyInfo } from '../service/userService';
+import { getUserByEmail, addUser, getUserVaultKeyInfo } from '../service/authService';
 import { hashPassword } from '../utils/hashPassword';
 
 

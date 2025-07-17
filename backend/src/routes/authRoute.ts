@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkUserVaultKeyInfo, createUser, loginUser } from "../controllers/userController";
+import { checkUserVaultKeyInfo, createUser, loginUser } from "../controllers/authController";
 import { checkSession, removeJwt, setJwt } from "../controllers/jwtController";
 import { verifyToken } from "../middleware/verifyToken";
 
