@@ -14,6 +14,10 @@ import { useAppDispatch } from '@/redux/hooks';
 import { loginUser } from '@/redux/authThunks';
 import toast from 'react-hot-toast';
 import { setTokenInCookies } from '@/utils/setJwt';
+import axios from 'axios';
+import { config } from '@/config/config';
+import { decryptGeneratedKey } from '@/lib/decryption/decryptGeneratedKey';
+import { useRouter } from 'next/navigation';
 
 
 type Inputs = {
@@ -26,32 +30,41 @@ const SignIn = () => {
   const [visiblePass, setVisiblePass] = useState<"password" | "text">("password");
   const [visibleKey, setVisibleKey] = useState<"password" | "text">("password");
   const { register, handleSubmit } = useForm<Inputs>();
-  const dispatch = useAppDispatch()
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     
     try {
       // if(!validateLoginForm(data)) return;
 
-      const testUser = {
-        email: data.email,
-        password: data.password,
-      }
+      const email = data.email;
+      const password = data.password;
+      const masterPassword = data.masterKey;
+
+      const fetchedUser = await axios.get(`${config.backend}/api/auth/users/${email}/vault-key-info`);
+      
+      if(fetchedUser.data.vaultKeyInfo) {
+        const { salt, iv, encryptedVaultKey } = fetchedUser.data.vaultKeyInfo;
+        await decryptGeneratedKey(salt, iv, encryptedVaultKey, masterPassword);
+      };
+
+      const testUser = { email, password };
 
       const user = await dispatch(loginUser(testUser)).unwrap();
-      if(user) {
+      
+      if(user.email == email) {
         await setTokenInCookies({
          id: user.id!,
          email: user.email!,
          name: user.name!,
          photo: user.photo
         });
-      }
+        router.push('/');
+      };
       
     } catch (error) {
-      if (typeof error === "string") {
-        toast.error(error);
-      };
+      toast.error("Invalid Credentials")
     }
 
   };
