@@ -1,5 +1,5 @@
 import { uint8ArrayToBase64 } from '@/utils/encoding';
-import * as argon2 from 'argon2-browser';
+import argon2 from 'argon2-browser/dist/argon2-bundled.min.js';
 
 export const generateEncryptedKey = async (masterPassword: string) => {
     // 1. Generate random salt (32 bytes)
