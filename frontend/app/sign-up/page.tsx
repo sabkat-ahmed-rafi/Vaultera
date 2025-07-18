@@ -15,6 +15,7 @@ import { validateRegisterForm } from '@/lib/validation/validateRegisterForm';
 import { useAppDispatch } from '@/redux/hooks';
 import { createUser } from '@/redux/authThunks';
 import { setTokenInCookies } from '@/utils/setJwt';
+import { generateEncryptedKey } from '@/lib/encryption/generateEncryptedKey';
 
 type Inputs = {
   name: string
@@ -28,21 +29,24 @@ const SignUp = () => {
   const [visiblePass, setVisiblePass] = useState<"password" | "text">("password");
   const [visibleKey, setVisibleKey] = useState<"password" | "text">("password");
   const { register, handleSubmit } = useForm<Inputs>();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     
     try {
       // if (!validateRegisterForm(data)) return;
 
+      const masterPassword = data.masterKey;
+      const { encryptedVaultKey, salt, iv } = await generateEncryptedKey(masterPassword)
+
       const testUser = {
         email: data.email,
         name: data.name,
         photo: '',
         password: data.password,
-        salt: "salt",
-        iv: "iv",
-        encryptedVaultKey: "valutkey" 
+        salt,
+        iv,
+        encryptedVaultKey 
       }
 
       const user = await dispatch(createUser(testUser)).unwrap();
