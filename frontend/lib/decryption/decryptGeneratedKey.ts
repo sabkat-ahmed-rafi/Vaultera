@@ -41,7 +41,7 @@ export const decryptGeneratedKey = async (
     const decryptedText = new TextDecoder().decode(decryptedBuffer);
     return decryptedText;
   } catch {
-    throw new Error('Invalid credentials');
+    throw new Error('Wrong Master Key');
   }
 
 };
