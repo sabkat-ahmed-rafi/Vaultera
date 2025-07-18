@@ -3,8 +3,9 @@ import { User } from "@/types/User";
 import { mapUser } from "@/utils/mapUser";
 import axios from "axios";
 import { setLoading } from "./authSlice";
+import { config } from "@/config/config";
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND;
+const backendUrl = config.backend;
 
 interface CreateUserPayload {
   email: string;
