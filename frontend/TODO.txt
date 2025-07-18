@@ -2,5 +2,4 @@
 TODO
 ===============
 
-* I have to use protected route only for when user login to his vault.
-* I have to use axiosSecure only after user logs in.
+* Now to encrypt and decrypt Vault secrets, I need to save the decryptedVaultKey after sign-up and sign-in  in the redux global user-state. So that I can use the decryptedVaultKey to encrypt and decrypt Vault secrets.
