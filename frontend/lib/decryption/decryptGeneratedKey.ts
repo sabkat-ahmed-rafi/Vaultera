@@ -38,8 +38,8 @@ export const decryptGeneratedKey = async (
       encryptedVaultKey
     );
 
-    const decryptedText = new TextDecoder().decode(decryptedBuffer);
-    return decryptedText;
+    const decryptedVaultKey = new TextDecoder().decode(decryptedBuffer);
+    return decryptedVaultKey;
   } catch {
     throw new Error('Wrong Master Key');
   }
