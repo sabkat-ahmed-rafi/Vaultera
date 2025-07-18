@@ -1,8 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { config } from './config/config';
-import userRoutes from './routes/userRoutes';
-import jwtRoutes from './routes/jwtRoutes';
+import authRoutes from './routes/authRoute';
 import cookieParser from 'cookie-parser';
 
 
@@ -18,7 +17,6 @@ app.use(cors({
 }))
 
 // Routes
-app.use('/api', userRoutes);
-app.use('/api', jwtRoutes);
+app.use('/api', authRoutes);
 
 export default app;
