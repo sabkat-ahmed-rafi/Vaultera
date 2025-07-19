@@ -16,6 +16,9 @@ import { useAppDispatch } from '@/redux/hooks';
 import { createUser } from '@/redux/authThunks';
 import { setTokenInCookies } from '@/utils/setJwt';
 import { generateEncryptedKey } from '@/lib/encryption/generateEncryptedKey';
+import { decryptGeneratedKey } from '@/lib/decryption/decryptGeneratedKey';
+import { setDecryptedVaultKey } from '@/redux/authSlice';
+import { useRouter } from 'next/navigation';
 
 type Inputs = {
   name: string
@@ -30,6 +33,7 @@ const SignUp = () => {
   const [visibleKey, setVisibleKey] = useState<"password" | "text">("password");
   const { register, handleSubmit } = useForm<Inputs>();
   const dispatch = useAppDispatch();
+  const router = useRouter()
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     
@@ -37,7 +41,9 @@ const SignUp = () => {
       // if (!validateRegisterForm(data)) return;
 
       const masterPassword = data.masterKey;
-      const { encryptedVaultKey, salt, iv } = await generateEncryptedKey(masterPassword)
+      const { encryptedVaultKey, salt, iv } = await generateEncryptedKey(masterPassword);
+      const decryptedVaultKey = await decryptGeneratedKey(salt, iv, encryptedVaultKey, masterPassword);
+      dispatch(setDecryptedVaultKey(decryptedVaultKey));
 
       const testUser = {
         email: data.email,
@@ -47,17 +53,18 @@ const SignUp = () => {
         salt,
         iv,
         encryptedVaultKey 
-      }
+      };
 
       const user = await dispatch(createUser(testUser)).unwrap();
-      if(user) {
+      if(user.email == data.email) {
         await setTokenInCookies({
          id: user.id!,
          email: user.email!,
          name: user.name!,
          photo: user.photo
         });
-      }
+        router.push('/');
+      };
       
     } catch (error) {
       if (typeof error === "string") {
