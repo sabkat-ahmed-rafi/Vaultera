@@ -18,6 +18,7 @@ import axios from 'axios';
 import { config } from '@/config/config';
 import { decryptGeneratedKey } from '@/lib/decryption/decryptGeneratedKey';
 import { useRouter } from 'next/navigation';
+import { setDecryptedVaultKey } from '@/redux/authSlice';
 
 
 type Inputs = {
@@ -46,7 +47,8 @@ const SignIn = () => {
       
       if(fetchedUser.data.vaultKeyInfo) {
         const { salt, iv, encryptedVaultKey } = fetchedUser.data.vaultKeyInfo;
-        await decryptGeneratedKey(salt, iv, encryptedVaultKey, masterPassword);
+        const decryptedVaultKey = await decryptGeneratedKey(salt, iv, encryptedVaultKey, masterPassword);
+        dispatch(setDecryptedVaultKey(decryptedVaultKey));
       };
 
       const testUser = { email, password };
