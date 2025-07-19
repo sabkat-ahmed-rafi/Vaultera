@@ -6,7 +6,7 @@ import { User } from "@/types/User";
 
 interface AuthState {
   user: User | null;
-  decryptedVaultKey: string | null;
+  decryptedVaultKey: Uint8Array | null;
   loading: boolean;
 }
 
@@ -24,7 +24,7 @@ const authSlice = createSlice({
         setUser: ( state, action: PayloadAction<User | null> ) => {
             state.user = action.payload;
         },
-        setDecryptedVaultKey: (state, action: PayloadAction<string | null>) => {
+        setDecryptedVaultKey: (state, action: PayloadAction<Uint8Array | null>) => {
             state.decryptedVaultKey = action.payload;
         },
         setLoading: ( state, action: PayloadAction<boolean> ) => {
