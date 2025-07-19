@@ -7,7 +7,7 @@ export const decryptGeneratedKey = async (
   base64IV: string,
   base64EncryptedVaultKey: string,
   masterPassword: string
-): Promise<string> => {
+): Promise<Uint8Array> => {
 
   const salt = base64ToUint8Array(base64Salt);
   const iv = base64ToUint8Array(base64IV);
@@ -38,8 +38,7 @@ export const decryptGeneratedKey = async (
       encryptedVaultKey
     );
 
-    const decryptedVaultKey = new TextDecoder().decode(decryptedBuffer);
-    return decryptedVaultKey;
+    return new Uint8Array(decryptedBuffer);
   } catch {
     throw new Error('Wrong Master Key');
   }
