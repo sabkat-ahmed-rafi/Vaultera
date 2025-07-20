@@ -68,7 +68,7 @@ const Unlock = () => {
               <Text as="label" size="2" mb="1" weight="bold" className='flex items-center space-x-1'>
                 <p>Master Key</p> 
               </Text>
-              <TextField.Root onChange={(e) => setMasterPassword(e.target.value)} placeholder="Enter master key" size="3" name='massterPassword' type={visibleKey}>
+              <TextField.Root onChange={(e) => setMasterPassword(e.target.value)} disabled={loading} placeholder="Enter master key" size="3" name='massterPassword' type={visibleKey}>
                 <TextField.Slot>
                   <IoKey height="16" width="16" />
                 </TextField.Slot>
