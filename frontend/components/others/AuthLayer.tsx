@@ -3,9 +3,8 @@
 import { checkAuthSession } from '@/redux/authThunks';
 import { useAppDispatch } from '@/redux/hooks'
 import React, { useEffect } from 'react'
-import MasterPasswordGuard from './MasterPasswordGuard';
 
-const AuthGuard = ( { children }: Readonly<{ children: React.ReactNode }> ) => {
+const AuthLayer = ( { children }: Readonly<{ children: React.ReactNode }> ) => {
 
   const dispatch = useAppDispatch();
 
@@ -13,13 +12,7 @@ const AuthGuard = ( { children }: Readonly<{ children: React.ReactNode }> ) => {
     dispatch(checkAuthSession());
   }, [dispatch])
 
-  return (
-    <>
-     <MasterPasswordGuard>
-      {children}
-     </MasterPasswordGuard>
-    </>
-  )
+  return <>{children}</>
 }
 
-export default AuthGuard
+export default AuthLayer
