@@ -1,9 +1,12 @@
 import Navbar from "@/components/Navbar/Navbar";
+import AuthLayer from "@/components/others/AuthLayer";
 
 export default function Home() {
   return (
-    <div>
-      <Navbar />
-    </div>
+    <AuthLayer>
+     <div>
+       <Navbar />
+     </div>
+    </AuthLayer>
   );
 }
