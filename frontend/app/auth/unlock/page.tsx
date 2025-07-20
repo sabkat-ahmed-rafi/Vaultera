@@ -1,22 +1,52 @@
 "use client"
 
 import Logo from '@/components/Logo/Logo';
+import { decryptGeneratedKey } from '@/lib/decryption/decryptGeneratedKey';
+import { setDecryptedVaultKey } from '@/redux/authSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { Box, Button, IconButton, Text, TextField } from '@radix-ui/themes';
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { FormEvent, useState } from 'react'
+import toast from 'react-hot-toast';
 import { IoEye, IoEyeOff, IoKey } from 'react-icons/io5';
 
 const Unlock = () => {
 
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { user } = useAppSelector(state => state.auth);
+    const dispatch = useAppDispatch();
+
     const encodedRedirect = searchParams.get('redirect');
     const redirectedTo = encodedRedirect ? decodeURIComponent(encodedRedirect) : '/';
 
     const [visibleKey, setVisibleKey] = useState<"password" | "text">("password");
+    const [masterPassword, setMasterPassword] = useState("");
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if(!user) return toast.error("Something went wrong");
+        // if (masterPassword.length < 12) {
+        //     toast.error("Master key must be at least 12 characters.");
+        //     return false;
+        // };
+
+        const { salt, iv, encryptedVaultKey } = user;
+        if (!salt || !iv || !encryptedVaultKey) {
+           toast.error("Something went wrong");
+           return;
+        };
+
+        try {
+          const decryptedVaultKey = await decryptGeneratedKey(salt, iv, encryptedVaultKey, masterPassword);
+          if(decryptedVaultKey instanceof Uint8Array) {
+            dispatch(setDecryptedVaultKey(decryptedVaultKey));
+            router.replace(redirectedTo);
+          };
+        } catch (error) {
+            toast.error("Incorrect master password");
+        }
     };
 
   return (
@@ -30,7 +60,7 @@ const Unlock = () => {
               <Text as="label" size="2" mb="1" weight="bold" className='flex items-center space-x-1'>
                 <p>Master Key</p> 
               </Text>
-              <TextField.Root placeholder="Enter master key" size="3" type={visibleKey}>
+              <TextField.Root onChange={(e) => setMasterPassword(e.target.value)} placeholder="Enter master key" size="3" name='massterPassword' type={visibleKey}>
                 <TextField.Slot>
                   <IoKey height="16" width="16" />
                 </TextField.Slot>
