@@ -63,7 +63,7 @@ const SignUp = () => {
          name: user.name!,
          photo: user.photo
         });
-        router.push('/');
+        router.replace('/');
       };
       
     } catch (error) {
