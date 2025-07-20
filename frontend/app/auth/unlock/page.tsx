@@ -16,6 +16,7 @@ const Unlock = () => {
     const searchParams = useSearchParams();
     const { user } = useAppSelector(state => state.auth);
     const dispatch = useAppDispatch();
+    const [loading, setLoading] = useState(false);
 
     const encodedRedirect = searchParams.get('redirect');
     const redirectedTo = encodedRedirect ? decodeURIComponent(encodedRedirect) : '/';
@@ -25,16 +26,22 @@ const Unlock = () => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);
 
-        if(!user) return toast.error("Something went wrong");
+        if(!user) {
+          setLoading(false);
+          return toast.error("Something went wrong");
+        }
         // if (masterPassword.length < 12) {
         //     toast.error("Master key must be at least 12 characters.");
+        //     setLoading(false);
         //     return false;
         // };
 
         const { salt, iv, encryptedVaultKey } = user;
         if (!salt || !iv || !encryptedVaultKey) {
            toast.error("Something went wrong");
+           setLoading(false);
            return;
         };
 
@@ -45,7 +52,8 @@ const Unlock = () => {
             router.replace(redirectedTo);
           };
         } catch (error) {
-            toast.error("Incorrect master password");
+          setLoading(false);
+          toast.error("Incorrect master password");
         }
     };
 
@@ -84,7 +92,7 @@ const Unlock = () => {
 
             {/* Form submit button */}
             <div className='mt-5 w-full'>
-              <Button style={{ width: '100%' }} type='submit' size='3' variant="classic" color='gray'>Access Vault</Button>
+              <Button loading={loading} style={{ width: '100%' }} type='submit' size='3' variant="classic" color='gray'>Access Vault</Button>
             </div>
             
           </Box>
