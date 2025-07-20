@@ -34,11 +34,16 @@ const SignUp = () => {
   const { register, handleSubmit } = useForm<Inputs>();
   const dispatch = useAppDispatch();
   const router = useRouter()
+  const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     
     try {
-      // if (!validateRegisterForm(data)) return;
+      setLoading(true);
+      // if (!validateRegisterForm(data)) {
+      //   setLoading(false);
+      //   return
+      // };
 
       const masterPassword = data.masterKey;
       const { encryptedVaultKey, salt, iv } = await generateEncryptedKey(masterPassword);
@@ -67,6 +72,7 @@ const SignUp = () => {
       };
       
     } catch (error) {
+      setLoading(false);
       if (typeof error === "string") {
         toast.error(error);
       };
@@ -83,7 +89,7 @@ const SignUp = () => {
             {/* Name Field */}
             <Box>
               <Text as="label" size="2" mb="1" weight="bold">Full Name</Text>
-              <TextField.Root {...register("name", { required: true })} placeholder="John Doe" size="3">
+              <TextField.Root {...register("name", { required: true })} disabled={loading} placeholder="John Doe" size="3">
                 <TextField.Slot>
                   <FaUser height="16" width="16" />
                 </TextField.Slot>
@@ -93,7 +99,7 @@ const SignUp = () => {
             {/* Email Field */}
             <Box>
               <Text as="label" size="2" mb="1" weight="bold">Email</Text>
-              <TextField.Root {...register("email", { required: true })} placeholder="you@example.com" type='email' size="3">
+              <TextField.Root {...register("email", { required: true })} disabled={loading} placeholder="you@example.com" type='email' size="3">
                 <TextField.Slot>
                   <MdEmail height="16" width="16" />
                 </TextField.Slot>
@@ -103,7 +109,7 @@ const SignUp = () => {
             {/* Password Field */}
             <Box>
               <Text as="label" size="2" mb="1" weight="bold">Password</Text>
-              <TextField.Root {...register("password", { required: true })} placeholder="Create password" size="3" type={visiblePass}>
+              <TextField.Root {...register("password", { required: true })} disabled={loading} placeholder="Create password" size="3" type={visiblePass}>
                 <TextField.Slot>
                   <RiLock2Fill height="16" width="16" />
                 </TextField.Slot>
@@ -133,7 +139,7 @@ const SignUp = () => {
                   <IoIosInformationCircle size={12} />
                 </Tooltip>
               </Text>
-              <TextField.Root {...register("masterKey", { required: true })} placeholder="Create master key" size="3" type={visibleKey}>
+              <TextField.Root {...register("masterKey", { required: true })} disabled={loading} placeholder="Create master key" size="3" type={visibleKey}>
                 <TextField.Slot>
                   <IoKey height="16" width="16" />
                 </TextField.Slot>
@@ -157,7 +163,7 @@ const SignUp = () => {
 
             {/* Form submit button */}
             <div className='mt-5'>
-              <Button style={{ width: '100%' }} type='submit' size='3' variant="classic" color='gray'>Sign up</Button>
+              <Button style={{ width: '100%' }} loading={loading} type='submit' size='3' variant="classic" color='gray'>Sign up</Button>
             </div>
             
 
