@@ -148,8 +148,8 @@ const SignIn = () => {
             </Box>
 
             {/* Form submit button */}
-            <div className='mt-5 flex justify-end'>
-              <Button type='submit' size='2' variant="classic" color='gray' highContrast>Log in</Button>
+            <div className='mt-5'>
+              <Button style={{ width: '100%' }} type='submit' size='3' variant="classic" color='gray'>Log in</Button>
             </div>
             
 
