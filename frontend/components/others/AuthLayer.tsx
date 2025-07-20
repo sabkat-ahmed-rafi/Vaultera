@@ -5,7 +5,7 @@ import { useAppDispatch } from '@/redux/hooks'
 import React, { useEffect } from 'react'
 import MasterPasswordGuard from './MasterPasswordGuard';
 
-const AuthLayer = ( { children }: Readonly<{ children: React.ReactNode }> ) => {
+const AuthGuard = ( { children }: Readonly<{ children: React.ReactNode }> ) => {
 
   const dispatch = useAppDispatch();
 
@@ -22,4 +22,4 @@ const AuthLayer = ( { children }: Readonly<{ children: React.ReactNode }> ) => {
   )
 }
 
-export default AuthLayer
+export default AuthGuard
