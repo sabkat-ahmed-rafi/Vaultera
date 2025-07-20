@@ -32,11 +32,6 @@ const Unlock = () => {
           setLoading(false);
           return toast.error("Something went wrong");
         }
-        // if (masterPassword.length < 12) {
-        //     toast.error("Master key must be at least 12 characters.");
-        //     setLoading(false);
-        //     return false;
-        // };
 
         const { salt, iv, encryptedVaultKey } = user;
         if (!salt || !iv || !encryptedVaultKey) {
