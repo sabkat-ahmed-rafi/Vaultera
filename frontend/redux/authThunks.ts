@@ -81,19 +81,14 @@ export const logout = createAsyncThunk<void>(
 
 export const checkAuthSession = createAsyncThunk<User | null>(
   "auth/checkAuthSession",
-  async (_, { dispatch }) => {
-    dispatch(setLoading(true));
+  async (_, { rejectWithValue }) => {
     try {
       const res = await axios.get(`${backendUrl}/api/auth/session`, {
         withCredentials: true
       });
-      if(res.data.user) {
-        dispatch(setLoading(false));
-      }
       return mapUser(res.data.user);
     } catch (error) {
-      dispatch(setLoading(false));
-      return null;
+      return rejectWithValue(null);
     }
   }
 );
