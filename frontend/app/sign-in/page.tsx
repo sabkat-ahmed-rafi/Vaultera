@@ -10,7 +10,7 @@ import Logo from '@/components/Logo/Logo';
 import Link from 'next/link';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { validateLoginForm } from '@/lib/validation/validateLoginForm';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { loginUser } from '@/redux/authThunks';
 import toast from 'react-hot-toast';
 import { setTokenInCookies } from '@/utils/setJwt';
@@ -33,11 +33,16 @@ const SignIn = () => {
   const { register, handleSubmit } = useForm<Inputs>();
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     
     try {
-      // if(!validateLoginForm(data)) return;
+      setLoading(true);
+      // if(!validateLoginForm(data)) {
+      // setLoading(false);
+      // return;
+      // };
 
       const email = data.email;
       const password = data.password;
@@ -54,7 +59,7 @@ const SignIn = () => {
       const testUser = { email, password };
 
       const user = await dispatch(loginUser(testUser)).unwrap();
-      
+
       if(user.email == email) {
         await setTokenInCookies({
          id: user.id!,
@@ -66,7 +71,8 @@ const SignIn = () => {
       };
       
     } catch (error) {
-      toast.error("Invalid Credentials")
+      setLoading(false);
+      toast.error("Invalid Credentials");
     }
 
   };
@@ -80,7 +86,7 @@ const SignIn = () => {
             {/* Email Field */}
             <Box>
               <Text as="label" size="2" mb="1" weight="bold">Email</Text>
-              <TextField.Root {...register("email", { required: true })} placeholder="you@example.com" size="3">
+              <TextField.Root {...register("email", { required: true })} disabled={loading} placeholder="you@example.com" size="3">
                 <TextField.Slot>
                   <MdEmail height="16" width="16" />
                 </TextField.Slot>
@@ -90,7 +96,7 @@ const SignIn = () => {
             {/* Password Field */}
             <Box>
               <Text as="label" size="2" mb="1" weight="bold">Password</Text>
-              <TextField.Root {...register("password", { required: true })} placeholder="Enter password" size="3" type={visiblePass}>
+              <TextField.Root {...register("password", { required: true })} disabled={loading} placeholder="Enter password" size="3" type={visiblePass}>
                 <TextField.Slot>
                   <RiLock2Fill height="16" width="16" />
                 </TextField.Slot>
@@ -125,7 +131,7 @@ const SignIn = () => {
                   <IoIosInformationCircle size={12} />
                 </Tooltip>
               </Text>
-              <TextField.Root {...register("masterKey", { required: true })} placeholder="Enter master key" size="3" type={visibleKey}>
+              <TextField.Root {...register("masterKey", { required: true })} disabled={loading} placeholder="Enter master key" size="3" type={visibleKey}>
                 <TextField.Slot>
                   <IoKey height="16" width="16" />
                 </TextField.Slot>
@@ -149,7 +155,7 @@ const SignIn = () => {
 
             {/* Form submit button */}
             <div className='mt-5'>
-              <Button style={{ width: '100%' }} type='submit' size='3' variant="classic" color='gray'>Log in</Button>
+              <Button style={{ width: '100%' }} loading={loading} type='submit' size='3' variant="classic" color='gray'>Log in</Button>
             </div>
             
 
