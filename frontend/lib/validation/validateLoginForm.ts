@@ -18,15 +18,5 @@ export const validateLoginForm = (data: {
     return false;
   }
 
-  if (data.password === data.masterKey) {
-    toast.error("Password and master key must not be the same.");
-    return false;
-  }
-
-  if (data.masterKey.length < 12) {
-    toast.error("Master key must be at least 12 characters.");
-    return false;
-  }
-
   return true;
 };
