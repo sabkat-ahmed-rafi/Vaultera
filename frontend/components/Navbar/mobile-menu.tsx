@@ -117,7 +117,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           <div className="p-6 border-t border-white/10">
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-400 font-semibold">
-                © 2025 VaulteraX
+                © 2025 Keynism
               </p>
               <div className="flex items-center space-x-2">
                 <HiStar className="w-5 h-5 text-white" />

@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import Link from "next/link";
 
 const blackHanSans = localFont({
   src: "../../fonts/BlackHanSans.ttf",
@@ -10,12 +11,12 @@ const Logo = () => {
   return (
     <section className='flex justify-center'>
         <div className='text-center p-5 select-none inline-block'>
-          <h1 
+          <Link href={'/'} 
            style={{ fontFamily: 'var(--font-black-han-sans)' }} 
            className={`${blackHanSans.variable} md:text-5xl text-3xl`}
            >
-            Vaultera
-          </h1>
+            Keynism
+          </Link>
           <p
            className={`md:text-[13px] text-[10px] italic font-thin`}
            >
