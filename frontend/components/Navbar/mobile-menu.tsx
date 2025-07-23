@@ -16,7 +16,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 animate-in fade-in duration-500" />
-      <Dialog.Content className="fixed top-0 right-0 h-full w-full max-w-md bg-black/95 backdrop-blur-2xl shadow-2xl z-50 animate-in slide-in-from-right duration-700 ease-out border-l border-white/10">
+      <Dialog.Content className="fixed top-0 right-0 h-full w-full max-w-md bg-[#101211]/95 backdrop-blur-2xl shadow-2xl z-50 animate-in slide-in-from-right duration-700 ease-out border-l border-white/10">
       <Dialog.Title className="sr-only">Mobile Navigation Menu</Dialog.Title>
         <div className="flex flex-col h-full">
           {/* Mobile Menu Header */}
