@@ -86,7 +86,7 @@ const SignIn = () => {
             {/* Email Field */}
             <Box>
               <Text as="label" size="2" mb="1" weight="bold">Email</Text>
-              <TextField.Root {...register("email", { required: true })} disabled={loading} placeholder="you@example.com" size="3">
+              <TextField.Root {...register("email", { required: true })} disabled={loading} placeholder="you@example.com" type='email' size="3">
                 <TextField.Slot>
                   <MdEmail height="16" width="16" />
                 </TextField.Slot>
