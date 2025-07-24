@@ -69,7 +69,8 @@ export const logout = createAsyncThunk<void>(
   "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      await axios.post(`${backendUrl}/api/auth/remove-jwt`);
+    const res = await axios.post(`${backendUrl}/api/auth/remove-jwt`, {}, { withCredentials: true });
+          console.log(res);
     } catch (error: any) {
       console.error(error);
       return rejectWithValue(error.response?.data || "Failed to logout");
