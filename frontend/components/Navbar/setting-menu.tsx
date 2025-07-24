@@ -5,7 +5,7 @@ import { HiCog, HiGlobe, HiUser } from 'react-icons/hi'
 const SettingsMenu = () => {
   return (
     <>
-        <div className="hidden lg:flex">
+        <div>
             <DropdownMenu.Root>
                     <DropdownMenu.Trigger asChild>
                       <button className="p-4 rounded-2xl text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-300 group">
@@ -14,7 +14,7 @@ const SettingsMenu = () => {
                     </DropdownMenu.Trigger>
                     <DropdownMenu.Portal>
                       <DropdownMenu.Content
-                        className="min-w-[220px] bg-black/95 backdrop-blur-2xl rounded-3xl p-3 shadow-2xl border border-white/10 animate-in slide-in-from-top-3 duration-500"
+                        className="min-w-[220px] bg-[#101211] backdrop-blur-2xl rounded-3xl p-3 shadow-2xl border border-white/10 animate-in slide-in-from-top-3 duration-500 z-[60]"
                         sideOffset={12}
                         align="end"
                       >

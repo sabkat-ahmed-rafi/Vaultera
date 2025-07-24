@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import * as Dialog from '@radix-ui/react-dialog';
 import { HiX, HiLightningBolt, HiStar } from 'react-icons/hi';
-import { FaRocket } from 'react-icons/fa';
 import { navigation, socialLinks } from './data';
 import Logo from '../Logo/Logo';
 import { User } from '@/types/User';
+import SettingsMenu from './setting-menu';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -26,6 +26,7 @@ export default function MobileMenu({ isOpen, onClose, user }: MobileMenuProps) {
             <Dialog.Title asChild>
               <Logo />
             </Dialog.Title>
+            <SettingsMenu /> 
             <Dialog.Close asChild>
               <button className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300 group">
                 <HiX className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" />

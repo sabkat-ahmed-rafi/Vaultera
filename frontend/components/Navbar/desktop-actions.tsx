@@ -16,7 +16,7 @@ type Props = {
 export default function DesktopActions({ user }: Props) {
   return (
     <div className="hidden lg:flex items-center space-x-4">
-      <SettingsMenu />
+      { user && <SettingsMenu /> }
 
       {
         !user && <div className='flex space-x-4'>
