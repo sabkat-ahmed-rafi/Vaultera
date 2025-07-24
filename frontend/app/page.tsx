@@ -4,6 +4,7 @@ import MasterPasswordGuard from "@/components/others/MasterPasswordGuard";
 
 export default function Home() {
   return (
+   <>
     <MasterPasswordGuard>
      <div>
        <Navbar />
@@ -12,5 +13,6 @@ export default function Home() {
       <HeroSection />
      </div>
     </MasterPasswordGuard>
+   </>
   );
 }
