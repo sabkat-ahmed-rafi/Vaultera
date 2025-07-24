@@ -8,10 +8,12 @@ import DesktopActions from './desktop-actions';
 import MobileToggle from './mobile-toggle';
 import MobileMenu from './mobile-menu';
 import Logo from '../Logo/Logo';
+import { useAppSelector } from '@/redux/hooks';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useAppSelector(state => state.auth);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +49,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           <Logo />
           <DesktopNav />
-          <DesktopActions />
+          <DesktopActions user={user} />
           
           <Dialog.Root open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <MobileToggle isOpen={isMobileMenuOpen} />
