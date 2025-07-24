@@ -6,7 +6,13 @@ import { Button } from '@radix-ui/themes';
 import Link from 'next/link';
 import { HiUser, HiCog, HiGlobe, HiLightningBolt } from 'react-icons/hi';
 
-export default function DesktopActions(user: User) {
+
+type Props = {
+  user: User | null;
+};
+
+
+export default function DesktopActions({ user }: Props) {
   return (
     <div className="hidden lg:flex items-center space-x-4">
       <DropdownMenu.Root>
@@ -50,7 +56,7 @@ export default function DesktopActions(user: User) {
       }
 
       {
-        !user.paid && <Link href={'/pricing'} className="relative group px-8 py-4 bg-white text-black font-bold rounded-2xl overflow-hidden shadow-2xl hover:shadow-white/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1">
+        !user?.paid && <Link href={'/pricing'} className="relative group px-8 py-4 bg-white text-black font-bold rounded-2xl overflow-hidden shadow-2xl hover:shadow-white/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1">
         <span className="relative z-10 flex items-center space-x-2">
           <HiLightningBolt className="w-5 h-5 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300" />
           <span>Plans</span>
