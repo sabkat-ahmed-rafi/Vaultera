@@ -1,8 +1,16 @@
+'use client'
+
+import { logout } from '@/redux/authThunks';
+import { useAppDispatch } from '@/redux/hooks';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import Link from 'next/link';
 import React from 'react'
 import { HiCog, HiGlobe, HiUser } from 'react-icons/hi'
 
 const SettingsMenu = () => {
+
+  const dispatch = useAppDispatch();
+
   return (
     <>
         <div>
@@ -27,9 +35,11 @@ const SettingsMenu = () => {
                           <span className="font-semibold">Settings</span>
                         </DropdownMenu.Item>
                         <DropdownMenu.Separator className="h-px bg-white/10 my-2" />
-                        <DropdownMenu.Item className="flex items-center space-x-3 px-5 py-4 rounded-2xl text-red-400 hover:bg-red-500/10 transition-all duration-300 cursor-pointer">
+                        <DropdownMenu.Item className="rounded-2xl text-red-400 hover:bg-red-500/10 transition-all duration-300 cursor-pointer">
+                         <Link onClick={() => dispatch(logout())} href={'/sign-in'} className='w-full flex items-center space-x-3 px-5 py-4'>
                           <HiGlobe className="w-5 h-5" />
                           <span className="font-semibold">Sign Out</span>
+                         </Link>
                         </DropdownMenu.Item>
                        </DropdownMenu.Content>
                     </DropdownMenu.Portal>
