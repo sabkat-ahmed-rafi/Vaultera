@@ -53,7 +53,7 @@ export default function Navbar() {
           
           <Dialog.Root open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <MobileToggle isOpen={isMobileMenuOpen} />
-            <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+            <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} user={user} />
           </Dialog.Root>
         </div>
       </div>

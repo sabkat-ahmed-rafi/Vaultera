@@ -6,13 +6,15 @@ import { HiX, HiLightningBolt, HiStar } from 'react-icons/hi';
 import { FaRocket } from 'react-icons/fa';
 import { navigation, socialLinks } from './data';
 import Logo from '../Logo/Logo';
+import { User } from '@/types/User';
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  user: User | null;
 }
 
-export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, onClose, user }: MobileMenuProps) {
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 animate-in fade-in duration-500" />
@@ -77,7 +79,8 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </div>
 
             {/* Mobile plan button */}
-            <div className="px-6 mt-10">
+              {
+                !user?.paid && <div className="px-6 mt-10">
              <Link href={'/pricing'}>
               <button className="w-full relative group px-8 py-5 bg-white text-black font-bold rounded-3xl overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-700">
                 <span className="relative z-10 flex items-center justify-center space-x-3">
@@ -88,6 +91,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </button>
              </Link>
             </div>
+              }
 
             {/* Social Links */}
             <div className="px-6 mt-10">
