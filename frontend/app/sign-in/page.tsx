@@ -72,7 +72,7 @@ const SignIn = () => {
       
     } catch (error: any) {
       setLoading(false);
-      if(error.status) return toast.error("Something went wrong")
+      if(error.status == 401) return toast.error("Something went wrong")
       toast.error("Invalid Credentials");
     }
 
