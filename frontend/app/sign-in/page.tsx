@@ -48,7 +48,7 @@ const SignIn = () => {
       const password = data.password;
       const masterPassword = data.masterKey;
 
-      const fetchedUser = await axios.get(`${config.backend}/api/auth/users/${email}/vault-key-info`);
+      const fetchedUser = await axios.get(`${config.backend}/api/auth/users/${email}/vault-key-info`, { withCredentials: true });
       
       if(fetchedUser.data.vaultKeyInfo) {
         const { salt, iv, encryptedVaultKey } = fetchedUser.data.vaultKeyInfo;
