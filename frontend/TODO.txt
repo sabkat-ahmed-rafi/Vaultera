@@ -2,8 +2,6 @@
 TODO
 ===============
 
-* Now I have to build the logout feature.
-
-* The MasterPasswordGuard and ProtectedRoute should only wrap the Vault.
+* The MasterPasswordGuard and ProtectedRoute should only wrap the Vault only.
 
 * Now to encrypt and decrypt Vault secrets, I need to save the decryptedVaultKey after sign-up and sign-in  in the redux global user-state. So that I can use the decryptedVaultKey to encrypt and decrypt Vault secrets. For this I have to use - AES-GCM.
