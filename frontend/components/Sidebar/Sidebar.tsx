@@ -17,49 +17,48 @@ import {
   RiSettingsLine,
   RiLogoutBoxLine
 } from 'react-icons/ri';
-import { Button } from '@radix-ui/themes';
 import { cn } from '@/lib/clsx/clsx';
 import Logo from '../Logo/Logo';
 
 const navigationItems = [
   {
     title: 'Dashboard',
-    href: '/',
+    href: '/vault',
     icon: RiDashboardLine,
   },
   {
     title: 'Passwords',
-    href: '/passwords',
+    href: '/vault/passwords',
     icon: RiKeyLine,
   },
   {
     title: 'Emails/Usernames',
-    href: '/emails',
+    href: '/vault/emails',
     icon: RiMailLine,
   },
   {
     title: '2FA (TOTP)',
-    href: '/2fa',
+    href: '/vault/2fa',
     icon: RiShieldKeyholeLine,
   },
   {
     title: 'Secure Notes',
-    href: '/notes',
+    href: '/vault/notes',
     icon: RiFileTextLine,
   },
   {
     title: 'Cards',
-    href: '/cards',
+    href: '/vault/cards',
     icon: RiBankCardLine,
   },
   {
     title: 'Bank Accounts',
-    href: '/bank-accounts',
+    href: '/vault/bank-accounts',
     icon: RiBankLine,
   },
   {
     title: 'Identities',
-    href: '/identities',
+    href: '/vault/identities',
     icon: RiUserLine,
   },
 ];
@@ -113,11 +112,11 @@ export default function Sidebar() {
                     className={cn(
                       "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                       isActive
-                        ? "bg-blue-600 text-white shadow-lg"
+                        ? "bg-gray-800/50 text-white shadow-lg"
                         : "text-gray-300 hover:text-white hover:bg-gray-800/50"
                     )}
                   >
-                    <Icon className="w-5 h-5" />
+                    <Icon className="size-5" />
                     <span>{item.title}</span>
                   </Link>
                 );
