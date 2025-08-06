@@ -18,7 +18,7 @@ import {
   RiLogoutBoxLine
 } from 'react-icons/ri';
 import { cn } from '@/lib/clsx/clsx';
-import Logo from '../Logo/Logo';
+import Logo from '@/components/Logo/Logo';
 
 const navigationItems = [
   {
