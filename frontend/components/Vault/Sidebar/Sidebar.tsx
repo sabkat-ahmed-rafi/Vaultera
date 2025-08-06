@@ -90,7 +90,7 @@ export default function Sidebar() {
         className={cn(
           "fixed left-0 top-0 z-40 h-screen w-72 backdrop-blur-sm border-r border-gray-700/50 transform transition-transform duration-300 ease-in-out overflow-auto lg:overflow-hidden",
           isOpen ? "translate-x-0" : "-translate-x-full",
-          "md:translate-x-0 md:relative md:z-auto"
+          "md:translate-x-0 md:sticky md:z-auto"
         )}
       >
         <div className="flex flex-col h-full">
