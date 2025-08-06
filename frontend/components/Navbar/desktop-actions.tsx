@@ -1,11 +1,11 @@
 'use client';
 
 import { User } from '@/types/User';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Button } from '@radix-ui/themes';
 import Link from 'next/link';
-import { HiUser, HiCog, HiGlobe, HiLightningBolt } from 'react-icons/hi';
+import { HiLightningBolt } from 'react-icons/hi';
 import SettingsMenu from './setting-menu';
+import { SiOpenmediavault } from "react-icons/si";
 
 
 type Props = {
@@ -16,6 +16,18 @@ type Props = {
 export default function DesktopActions({ user }: Props) {
   return (
     <div className="hidden lg:flex items-center space-x-4">
+
+      {
+        user?.paid && <Link href={'/vault'}>
+          <button
+            className="group flex items-center justify-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl bg-white text-black shadow-md hover:shadow-xl border border-gray-200 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-white/80 backdrop-blur-md"
+          >
+            <SiOpenmediavault className="text-lg sm:text-xl group-hover:rotate-12 transition-transform duration-300" />
+            <span className="font-medium text-sm sm:text-base tracking-wide">Vault</span>
+          </button>
+        </Link>
+      }
+
       { user && <SettingsMenu /> }
 
       {
