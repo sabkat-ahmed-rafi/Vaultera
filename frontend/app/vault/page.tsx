@@ -36,7 +36,7 @@ const vaultCategories = [
     count: 8,
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/20',
-    href: '/emails'
+    href: '/vault/emails'
   },
   {
     id: '2fa',
@@ -46,7 +46,7 @@ const vaultCategories = [
     count: 12,
     color: 'text-green-400',
     bgColor: 'bg-green-500/20',
-    href: '/2fa'
+    href: '/vault/2fa'
   },
   {
     id: 'notes',
@@ -56,7 +56,7 @@ const vaultCategories = [
     count: 5,
     color: 'text-purple-400',
     bgColor: 'bg-purple-500/20',
-    href: '/notes'
+    href: '/vault/notes'
   },
   {
     id: 'cards',
@@ -66,7 +66,7 @@ const vaultCategories = [
     count: 4,
     color: 'text-emerald-400',
     bgColor: 'bg-emerald-500/20',
-    href: '/cards'
+    href: '/vault/cards'
   },
   {
     id: 'bank-accounts',
@@ -76,7 +76,7 @@ const vaultCategories = [
     count: 3,
     color: 'text-indigo-400',
     bgColor: 'bg-indigo-500/20',
-    href: '/bank-accounts'
+    href: '/vault/bank-accounts'
   },
   {
     id: 'identities',
@@ -86,7 +86,7 @@ const vaultCategories = [
     count: 2,
     color: 'text-pink-400',
     bgColor: 'bg-pink-500/20',
-    href: '/identities'
+    href: '/vault/identities'
   }
 ];
 
