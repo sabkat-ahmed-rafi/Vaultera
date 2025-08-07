@@ -143,10 +143,10 @@ export default function TwoFAPage() {
       <div className="p-4 md:p-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 overflow-hidden">
             <div className='relative left-10 lg:left-0'>
               <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-green-500/20 rounded-lg md:flex items-center justify-center hidden">
+              <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center ">
                 <RiShieldKeyholeLine className="w-6 h-6 text-green-400" />
               </div>
               <div>

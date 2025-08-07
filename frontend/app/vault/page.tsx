@@ -104,7 +104,7 @@ export default function Dashboard() {
       <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6 md:mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 overflow-hidden">
             <div className='relative left-10 lg:left-0'>
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">Dashboard</h1>
               <p className="text-sm md:text-base text-gray-400">Manage your secure vault items</p>
