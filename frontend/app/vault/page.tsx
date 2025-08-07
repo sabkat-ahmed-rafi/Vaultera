@@ -11,12 +11,11 @@ import {
   RiBankLine,
   RiUserLine,
   RiSearchLine,
-  RiAddLine,
   RiEyeLine,
   RiLockLine,
   RiArrowRightLine
 } from 'react-icons/ri';
-import { Button, Card, TextField } from '@radix-ui/themes';
+import { Card, TextField } from '@radix-ui/themes';
 
 const vaultCategories = [
   {
@@ -27,7 +26,7 @@ const vaultCategories = [
     count: 23,
     color: 'text-amber-400',
     bgColor: 'bg-amber-500/20',
-    href: '/passwords'
+    href: '/vault/passwords'
   },
   {
     id: 'emails',
