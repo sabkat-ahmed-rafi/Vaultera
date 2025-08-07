@@ -106,14 +106,10 @@ export default function Dashboard() {
         {/* Header */}
         <div className="mb-6 md:mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
+            <div className='relative left-10 lg:left-0'>
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">Dashboard</h1>
               <p className="text-sm md:text-base text-gray-400">Manage your secure vault items</p>
-            </div>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white border-0 w-full sm:w-auto">
-              <RiAddLine className="w-4 h-4 mr-2" />
-              Quick Add
-            </Button>
+            </div>  
           </div>
         </div>
 
@@ -134,7 +130,7 @@ export default function Dashboard() {
           </Card>
 
           <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
-            <div className="p-6">
+            <Card className="p-4 md:p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-400 text-sm font-medium">Categories</p>
@@ -144,11 +140,11 @@ export default function Dashboard() {
                   <RiFileTextLine className="w-6 h-6 text-green-400" />
                 </div>
               </div>
-            </div>
+            </Card>
           </Card>
 
           <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
-            <div className="p-6">
+            <Card className="p-4 md:p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-400 text-sm font-medium">2FA Enabled</p>
@@ -158,11 +154,11 @@ export default function Dashboard() {
                   <RiShieldKeyholeLine className="w-6 h-6 text-amber-400" />
                 </div>
               </div>
-            </div>
+            </Card>
           </Card>
 
           <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
-            <div className="p-6">
+            <Card className="p-4 md:p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-400 text-sm font-medium">Security Score</p>
@@ -172,20 +168,22 @@ export default function Dashboard() {
                   <RiEyeLine className="w-6 h-6 text-purple-400" />
                 </div>
               </div>
-            </div>
+            </Card>
           </Card>
         </div>
 
         {/* Search Bar */}
         <div className="mb-6 md:mb-8">
           <div className="relative max-w-full md:max-w-md">
-            <RiSearchLine className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <TextField.Root
               placeholder="Search vault categories..."
               value={searchQuery}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400 focus:border-blue-500 w-full"
-            />
+            >
+             <TextField.Slot>
+               <RiSearchLine className="size-4 text-gray-400" />
+             </TextField.Slot>
+            </TextField.Root>
           </div>
         </div>
 
