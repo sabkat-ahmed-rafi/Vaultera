@@ -146,7 +146,7 @@ export default function TwoFAPage() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className='relative left-10 lg:left-0'>
               <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-green-500/20 rounded-lg md:flex items-center justify-center hidden">
                 <RiShieldKeyholeLine className="w-6 h-6 text-green-400" />
               </div>
               <div>
@@ -250,7 +250,7 @@ export default function TwoFAPage() {
               <Card className="p-6">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-5 lg:gap-0">
                   <div className="flex items-center gap-4 flex-1">
-                    <div className="lg:w-12 lg:h-12 size-6 bg-gray-700/50 rounded-lg flex items-center justify-center">
+                    <div className="lg:w-12 lg:h-12 hidden bg-gray-700/50 rounded-lg lg:flex items-center justify-center">
                       <RiQrCodeLine className="lg:size-6 text-gray-400" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -336,9 +336,9 @@ export default function TwoFAPage() {
             </p>
             <Button 
               onClick={() => setIsAddDialogOpen(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              style={{backgroundColor: 'white', color: 'black', cursor: 'pointer'}} 
             >
-              <RiAddLine className="w-4 h-4 mr-2" />
+              <RiAddLine className="size-4 mr-2" />
               Add 2FA Account
             </Button>
           </div>
