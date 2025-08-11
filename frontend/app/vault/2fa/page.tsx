@@ -218,7 +218,7 @@ export default function TwoFAPage() {
                       placeholder="Additional notes..."
                     />
                   </div>
-                  <Button style={{backgroundColor: 'white', color: 'black', cursor: 'pointer'}} onClick={handleAddAccount} className="w-full">
+                  <Button color='green' style={{cursor: 'pointer'}} onClick={handleAddAccount} className="w-full">
                     Add 2FA Account
                   </Button>
                 </div>
