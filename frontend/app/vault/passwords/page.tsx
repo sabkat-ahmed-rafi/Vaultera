@@ -6,7 +6,6 @@ import {
   TextField,
   Dialog,
   Flex,
-  Heading,
   Text,
 } from "@radix-ui/themes";
 import { RiShieldKeyholeLine } from "react-icons/ri";
@@ -94,6 +93,10 @@ const PasswordsPage: React.FC = () => {
       setEditItem(null);
       setEditForm(null);
     }
+  };
+
+  const handleDelete = (id: string) => {
+    setPasswords((prev) => prev.filter((item) => item.id !== id));
   };
 
   // Add new password logic
@@ -196,6 +199,14 @@ const PasswordsPage: React.FC = () => {
                         onClick={() => handleEditClick(item)}
                       >
                         Edit
+                      </Button>
+                      <Button
+                        size="1"
+                        variant="soft"
+                        color="red"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        Delete
                       </Button>
                     </Flex>
                   </Table.Cell>
