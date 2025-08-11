@@ -8,7 +8,7 @@ import {
   Flex,
   Text,
 } from "@radix-ui/themes";
-import { RiShieldKeyholeLine } from "react-icons/ri";
+import { RiAddLine, RiShieldKeyholeLine } from "react-icons/ri";
 
 type PasswordItem = {
   id: string;
@@ -142,7 +142,12 @@ const PasswordsPage: React.FC = () => {
             onChange={(e) => setSearch(e.target.value)}
             className="w-full md:w-[60%]">
           </TextField.Root>
-          <Button variant="solid" color="green" onClick={() => setAddOpen(true)}>
+          <Button 
+            style={{backgroundColor: 'white', color: 'black', cursor: 'pointer'}}  
+            variant="solid" 
+            onClick={() => setAddOpen(true)}
+          >
+            <RiAddLine className="size-4 mr-2" />
             Add New
           </Button>
         </Flex>
