@@ -17,3 +17,11 @@ export interface PasswordListProps {
   handleEditClick: (item: PasswordItem) => void;
   handleDelete: (id: string) => void;
 }
+
+export interface PasswordEditDialogProps {
+  editItem: PasswordItem | null;
+  setEditItem: Dispatch<SetStateAction<PasswordItem | null>>;
+  editForm: PasswordItem | null;
+  handleEditChange: (field: "name" | "username" | "password" | "url", value: string) => void;
+  handleEditSave: () => void;
+}
