@@ -10,7 +10,7 @@ export type PasswordItem = {
 
 
 export interface PasswordListProps {
-  loading: Boolean;
+  loading: boolean;
   filteredPasswords: PasswordItem[];
   showPasswordIds: Set<string>;
   handleShowPassword: (id: string) => void;
@@ -24,4 +24,12 @@ export interface PasswordEditDialogProps {
   editForm: PasswordItem | null;
   handleEditChange: (field: "name" | "username" | "password" | "url", value: string) => void;
   handleEditSave: () => void;
+}
+
+export interface AddPasswordDialogProps {
+  addOpen: boolean;
+  setAddOpen: Dispatch<SetStateAction<boolean>>, 
+  addForm: PasswordItem, 
+  handleAddChange: (field: "name" | "username" | "password" | "url", value: string) => void, 
+  handleAddSave: () => void
 }
