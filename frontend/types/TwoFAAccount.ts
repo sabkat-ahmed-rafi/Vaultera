@@ -6,24 +6,21 @@ export interface TwoFAAccount {
   issuer: string;
   accountName: string;
   secret: string;
+  notes?: string;
   currentCode: string;
   timeRemaining: number;
-  notes?: string;
   createdAt: string;
 }
 
-export interface Account2Fa {
-  title: string;
-  issuer: string;
-  accountName: string;
-  secret: string;
-  notes: string;
-}
+export type TwoFAAccountForm = Omit< 
+  TwoFAAccount,
+  "id" | "currentCode" | "timeRemaining" | "createdAt"
+>;
 
 export interface Add2faDialogProps {
   isAddDialogOpen: boolean;
   setIsAddDialogOpen: (open: boolean) => void;
-  newAccount: Account2Fa;
-  setNewAccount: Dispatch<SetStateAction<Account2Fa>>;
+  newAccount: TwoFAAccountForm;
+  setNewAccount: Dispatch<SetStateAction<TwoFAAccountForm>>;
   handleAddAccount: () => void;
 }
