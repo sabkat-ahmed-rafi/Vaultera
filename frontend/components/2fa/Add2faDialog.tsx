@@ -2,7 +2,7 @@
 
 import { Add2faDialogProps } from '@/types/TwoFAAccount'
 import { Button, Dialog, TextArea, TextField } from '@radix-ui/themes'
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React from 'react'
 import { RiAddLine } from 'react-icons/ri'
 
 
