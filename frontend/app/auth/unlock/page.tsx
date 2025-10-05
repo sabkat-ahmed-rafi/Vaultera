@@ -1,7 +1,7 @@
 "use client"
 
 import Logo from '@/components/Logo/Logo';
-import { decryptGeneratedKey } from '@/lib/decryption/decryptGeneratedKey';
+import { decryptGeneratedKey } from 'cryptonism';
 import { setDecryptedVaultKey } from '@/redux/authSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { Box, Button, IconButton, Text, TextField } from '@radix-ui/themes';
@@ -41,11 +41,13 @@ const Unlock = () => {
         };
 
         try {
-          const decryptedVaultKey = await decryptGeneratedKey(salt, iv, encryptedVaultKey, masterPassword);
-          if(decryptedVaultKey instanceof Uint8Array) {
-            dispatch(setDecryptedVaultKey(decryptedVaultKey));
+          const decResult = await decryptGeneratedKey({ salt, iv, encryptedKey: encryptedVaultKey, password: masterPassword });
+          if(decResult?.success) {
+            dispatch(setDecryptedVaultKey(decResult.decryptedKey));
             router.replace(redirectedTo);
-          };
+          } else {
+            throw new Error(decResult?.error?.message || 'Failed to decrypt');
+          }
         } catch (error) {
           setLoading(false);
           toast.error("Incorrect master password");

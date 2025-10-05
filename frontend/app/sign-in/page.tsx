@@ -16,7 +16,7 @@ import toast from 'react-hot-toast';
 import { setTokenInCookies } from '@/utils/setJwt';
 import axios from 'axios';
 import { config } from '@/config/config';
-import { decryptGeneratedKey } from '@/lib/decryption/decryptGeneratedKey';
+import { decryptGeneratedKey } from 'cryptonism';
 import { useRouter } from 'next/navigation';
 import { setDecryptedVaultKey } from '@/redux/authSlice';
 
@@ -52,8 +52,11 @@ const SignIn = () => {
       
       if(fetchedUser.data.vaultKeyInfo) {
         const { salt, iv, encryptedVaultKey } = fetchedUser.data.vaultKeyInfo;
-        const decryptedVaultKey = await decryptGeneratedKey(salt, iv, encryptedVaultKey, masterPassword);
-        dispatch(setDecryptedVaultKey(decryptedVaultKey));
+        const decResult = await decryptGeneratedKey({ salt, iv, encryptedKey: encryptedVaultKey, password: masterPassword });
+        if(!decResult?.success) {
+          throw new Error(decResult?.error?.message || 'Failed to decrypt vault key');
+        }
+        dispatch(setDecryptedVaultKey(decResult.decryptedKey));
       };
 
       const testUser = { email, password };

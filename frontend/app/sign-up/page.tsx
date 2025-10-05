@@ -15,8 +15,7 @@ import { validateRegisterForm } from '@/lib/validation/validateRegisterForm';
 import { useAppDispatch } from '@/redux/hooks';
 import { createUser } from '@/redux/authThunks';
 import { setTokenInCookies } from '@/utils/setJwt';
-import { generateEncryptedKey } from '@/lib/encryption/generateEncryptedKey';
-import { decryptGeneratedKey } from '@/lib/decryption/decryptGeneratedKey';
+import { generateEncryptedKey, decryptGeneratedKey } from 'cryptonism';
 import { setDecryptedVaultKey } from '@/redux/authSlice';
 import { useRouter } from 'next/navigation';
 
@@ -46,9 +45,16 @@ const SignUp = () => {
       // };
 
       const masterPassword = data.masterKey;
-      const { encryptedVaultKey, salt, iv } = await generateEncryptedKey(masterPassword);
-      const decryptedVaultKey = await decryptGeneratedKey(salt, iv, encryptedVaultKey, masterPassword);
-      dispatch(setDecryptedVaultKey(decryptedVaultKey));
+      const genResult = await generateEncryptedKey({ password: masterPassword });
+      if(!genResult?.success) {
+        throw new Error(genResult?.error?.message || 'Failed to generate vault key');
+      }
+      const { encryptedKey, salt, iv } = genResult;
+      const decResult = await decryptGeneratedKey({ salt, iv, encryptedKey, password: masterPassword });
+      if(!decResult?.success) {
+        throw new Error(decResult?.error?.message || 'Failed to decrypt generated key');
+      }
+      dispatch(setDecryptedVaultKey(decResult.decryptedKey));
 
       const testUser = {
         email: data.email,
@@ -57,7 +63,7 @@ const SignUp = () => {
         password: data.password,
         salt,
         iv,
-        encryptedVaultKey 
+        encryptedVaultKey: encryptedKey 
       };
 
       const user = await dispatch(createUser(testUser)).unwrap();
