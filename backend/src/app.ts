@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { config } from './config/config';
 import authRoutes from './routes/authRoute';
+import vaultRoutes from './routes/vaultRoute';
 import cookieParser from 'cookie-parser';
 
 
@@ -18,5 +19,6 @@ app.use(cors({
 
 // Routes
 app.use('/api', authRoutes);
+app.use('/api', vaultRoutes);
 
 export default app;
