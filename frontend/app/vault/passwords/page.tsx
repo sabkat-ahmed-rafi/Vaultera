@@ -11,26 +11,28 @@ import PasswordList from "@/components/Passwords/PasswordList";
 import { PasswordItem } from "@/types/Passwords";
 import PasswordEditDialog from "@/components/Passwords/PasswordEditDialog";
 import AddPasswordDialog from "@/components/Passwords/AddPasswordDialog";
+import axios from "axios";
+import { config } from "@/config/config";
+import { useAppSelector } from "@/redux/hooks";
+import { decryptSecret, encryptSecret } from "cryptonism";
+import toast from "react-hot-toast";
 
 
-const fetchPasswords = async (): Promise<PasswordItem[]> => {
-  // Replace with your API call
-  return [
-    {
-      id: "1",
-      name: "GitHub",
-      username: "user123",
-      password: "mygithubpassword",
-      url: "https://github.com",
-    },
-    {
-      id: "2",
-      name: "Google",
-      username: "user456",
-      password: "mygooglepassword",
-      url: "https://google.com",
-    },
-  ];
+const fetchPasswords = async (decryptedKey: Uint8Array | null): Promise<PasswordItem[]> => {
+  const res = await axios.get(`${config.backend}/api/vault/passwords`, { withCredentials: true });
+  const items = res.data.items as Array<{ id: string; name: string; username: string; url?: string; encryptedSecret: string; iv: string; }>;
+
+  if(!decryptedKey) return items.map(i => ({ id: i.id, name: i.name, username: i.username, password: "", url: i.url }));
+
+  const decrypted = await Promise.all(items.map(async (i) => {
+    const dec = await decryptSecret({ encryptedSecret: i.encryptedSecret, iv: i.iv, decryptedKey });
+    if(!dec?.success) {
+      return { id: i.id, name: i.name, username: i.username, password: "", url: i.url };
+    }
+    return { id: i.id, name: i.name, username: i.username, password: dec.decryptedSecret, url: i.url };
+  }));
+
+  return decrypted;
 };
 
 const PasswordsPage: React.FC = () => {
@@ -49,12 +51,20 @@ const PasswordsPage: React.FC = () => {
     url: "",
   });
 
+  const { decryptedVaultKey } = useAppSelector(state => state.auth);
+
   useEffect(() => {
-    fetchPasswords().then((data) => {
-      setPasswords(data);
-      setLoading(false);
-    });
-  }, []);
+    (async () => {
+      try {
+        const data = await fetchPasswords(decryptedVaultKey);
+        setPasswords(data);
+      } catch (_) {
+        toast.error("Something went wrong!");
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [decryptedVaultKey]);
 
   const handleShowPassword = (id: string) => {
     setShowPasswordIds((prev) => {
@@ -80,18 +90,34 @@ const PasswordsPage: React.FC = () => {
     setEditForm((prev) => prev && { ...prev, [field]: value });
   };
 
-  const handleEditSave = () => {
-    if (editForm) {
-      setPasswords((prev) =>
-        prev.map((item) => (item.id === editForm.id ? editForm : item))
-      );
+  const handleEditSave = async () => {
+    try {
+      if (!editForm) return;
+      if (!decryptedVaultKey) return;
+      const enc = await encryptSecret({ secret: editForm.password, decryptedKey: decryptedVaultKey });
+      if(!enc?.success) throw new Error("encrypt-failed");
+      await axios.put(`${config.backend}/api/vault/passwords/${editForm.id}`, {
+        name: editForm.name,
+        username: editForm.username,
+        url: editForm.url,
+        encryptedSecret: enc.encryptedSecret,
+        iv: enc.iv,
+      }, { withCredentials: true });
+      setPasswords((prev) => prev.map((item) => (item.id === editForm.id ? editForm : item)));
       setEditItem(null);
       setEditForm(null);
+    } catch (_) {
+      toast.error("Something went wrong!");
     }
   };
 
-  const handleDelete = (id: string) => {
-    setPasswords((prev) => prev.filter((item) => item.id !== id));
+  const handleDelete = async (id: string) => {
+    try {
+      await axios.delete(`${config.backend}/api/vault/passwords/${id}`, { withCredentials: true });
+      setPasswords((prev) => prev.filter((item) => item.id !== id));
+    } catch (_) {
+      toast.error("Something went wrong!");
+    }
   };
 
   // Add new password logic
@@ -99,20 +125,25 @@ const PasswordsPage: React.FC = () => {
     setAddForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleAddSave = () => {
-    if (addForm.name && addForm.username && addForm.password) {
-      setPasswords((prev) => [
-        ...prev,
-        { ...addForm, id: Date.now().toString() },
-      ]);
-      setAddForm({
-        id: "",
-        name: "",
-        username: "",
-        password: "",
-        url: "",
-      });
+  const handleAddSave = async () => {
+    try {
+      if (!addForm.name || !addForm.username || !addForm.password) return;
+      if (!decryptedVaultKey) return;
+      const enc = await encryptSecret({ secret: addForm.password, decryptedKey: decryptedVaultKey });
+      if(!enc?.success) throw new Error("encrypt-failed");
+      const res = await axios.post(`${config.backend}/api/vault/passwords`, {
+        name: addForm.name,
+        username: addForm.username,
+        url: addForm.url,
+        encryptedSecret: enc.encryptedSecret,
+        iv: enc.iv,
+      }, { withCredentials: true });
+      const created = res.data as { id: string };
+      setPasswords((prev) => [ ...prev, { ...addForm, id: created.id } ]);
+      setAddForm({ id: "", name: "", username: "", password: "", url: "" });
       setAddOpen(false);
+    } catch (_) {
+      toast.error("Something went wrong!");
     }
   };
 

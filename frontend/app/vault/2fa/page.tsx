@@ -9,45 +9,17 @@ import {
 import { Button, TextField } from '@radix-ui/themes';
 import { TwoFAAccount, TwoFAAccountForm } from '@/types/TwoFAAccount';
 import { generateTOTP } from '@/lib/2fa/generateTOTP';
+import axios from 'axios';
+import { config } from '@/config/config';
+import { useAppSelector } from '@/redux/hooks';
+import { decryptSecret, encryptSecret } from 'cryptonism';
 import Add2faDialog from '@/components/2fa/Add2faDialog';
 import AccountLists2fa from '@/components/2fa/AccountLists2fa';
+import toast from 'react-hot-toast';
 
 
 
-const mock2FAAccounts: TwoFAAccount[] = [
-  {
-    id: '1',
-    title: 'GitHub',
-    issuer: 'GitHub',
-    accountName: 'john.doe@email.com',
-    secret: 'JBSWY3DPEHPK3PXP',
-    currentCode: '123456',
-    timeRemaining: 15,
-    notes: 'Work account 2FA',
-    createdAt: '2024-01-15'
-  },
-  {
-    id: '2',
-    title: 'Google Account',
-    issuer: 'Google',
-    accountName: 'john.doe@gmail.com',
-    secret: 'HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ',
-    currentCode: '789012',
-    timeRemaining: 25,
-    createdAt: '2024-01-10'
-  },
-  {
-    id: '3',
-    title: 'AWS Console',
-    issuer: 'Amazon Web Services',
-    accountName: 'john.doe@company.com',
-    secret: 'GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ',
-    currentCode: '345678',
-    timeRemaining: 8,
-    notes: 'Company AWS account',
-    createdAt: '2024-01-05'
-  }
-];
+const mock2FAAccounts: TwoFAAccount[] = [];
 
 export default function TwoFAPage() {
 
@@ -63,36 +35,7 @@ export default function TwoFAPage() {
   });
 
 
-
-
-//   useEffect(() => {
-//       async function fetchAccounts() {
-//        try {
-//          const res = await axios.get('/api/accounts');
-//          const data = res.data;
-
-//           // Calculate initial TOTP codes for each account
-//           const updated = data.map((account: TwoFAAccount) => {
-//             const { code, timeRemaining } = generateTOTP(account.secret);
-//             return {
-//               ...account,
-//               currentCode: code,
-//               timeRemaining,
-//             };
-//           });
-
-//           setAccounts(updated);
-//         } catch (error) {
-//           console.error('Failed to fetch accounts:', error);
-//         }
-//       }
-
-//       fetchAccounts();
-//   }, []);
-
-
-
-  // Update TOTP codes every 30 seconds
+  // Update TOTP codes every 1s
   useEffect(() => {
     const interval = setInterval(() => {
       setAccounts(prevAccounts => 
@@ -110,28 +53,76 @@ export default function TwoFAPage() {
     return () => clearInterval(interval);
   }, []);
 
+  const { decryptedVaultKey } = useAppSelector(state => state.auth);
+
+  useEffect(() => {
+      async function fetchAccounts() {
+       try {
+         const res = await axios.get(`${config.backend}/api/vault/2fa`, { withCredentials: true });
+         const items = res.data.items as Array<{ id: string; title: string; issuer: string; accountName: string; notes?: string; encryptedSecret: string; iv: string; createdAt: string; }>;
+         const mapped = await Promise.all(items.map(async (i) => {
+            if(!decryptedVaultKey) {
+              return { id: i.id, title: i.title, issuer: i.issuer, accountName: i.accountName, secret: '', currentCode: '------', timeRemaining: 0, notes: i.notes, createdAt: i.createdAt } as TwoFAAccount;
+            }
+            const dec = await decryptSecret({ encryptedSecret: i.encryptedSecret, iv: i.iv, decryptedKey: decryptedVaultKey });
+            const secret = dec?.success ? dec.decryptedSecret : '';
+            const { code, timeRemaining } = generateTOTP(secret || '');
+            return { id: i.id, title: i.title, issuer: i.issuer, accountName: i.accountName, secret, currentCode: code, timeRemaining, notes: i.notes, createdAt: i.createdAt } as TwoFAAccount;
+         }));
+         setAccounts(mapped);
+       } catch (error) {
+         console.log('Failed to fetch accounts:', error);
+         toast.error('Something went wrong!')
+       }
+      }
+
+      fetchAccounts();
+  }, [decryptedVaultKey]);
+
   const filteredAccounts = accounts.filter(account =>
     account.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     account.issuer.toLowerCase().includes(searchQuery.toLowerCase()) ||
     account.accountName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleAddAccount = () => {
-    console.log(newAccount)
-    const account: TwoFAAccount = {
-      id: Date.now().toString(),
-      ...newAccount,
-      currentCode: '000000',
-      timeRemaining: 30,
-      createdAt: new Date().toISOString().split('T')[0]
-    };
-    setAccounts([...accounts, account]);
-    setNewAccount({ title: '', issuer: '', accountName: '', secret: '', notes: '' });
-    setIsAddDialogOpen(false);
+  const handleAddAccount = async () => {
+    try {
+      if(!newAccount.title || !newAccount.accountName || !newAccount.secret) return;
+      if(!decryptedVaultKey) return;
+      const enc = await encryptSecret({ secret: newAccount.secret, decryptedKey: decryptedVaultKey });
+      if(!enc?.success) throw new Error('encrypt-failed');
+      const res = await axios.post(`${config.backend}/api/vault/2fa`, {
+        title: newAccount.title,
+        issuer: newAccount.issuer,
+        accountName: newAccount.accountName,
+        notes: newAccount.notes,
+        encryptedSecret: enc.encryptedSecret,
+        iv: enc.iv,
+      }, { withCredentials: true });
+      const created = res.data as { id: string };
+      const { code, timeRemaining } = generateTOTP(newAccount.secret);
+      const account: TwoFAAccount = {
+        id: created.id,
+        ...newAccount,
+        currentCode: code,
+        timeRemaining,
+        createdAt: new Date().toISOString().split('T')[0]
+      };
+      setAccounts([...accounts, account]);
+      setNewAccount({ title: '', issuer: '', accountName: '', secret: '', notes: '' });
+      setIsAddDialogOpen(false);
+    } catch (_) {
+      toast.error('Something went wrong!');
+    }
   };
 
-  const handleDeleteAccount = (id: string) => {
-    setAccounts(accounts.filter(a => a.id !== id));
+  const handleDeleteAccount = async (id: string) => {
+    try {
+      await axios.delete(`${config.backend}/api/vault/2fa/${id}`, { withCredentials: true });
+      setAccounts(accounts.filter(a => a.id !== id));
+    } catch (_) {
+      toast.error('Something went wrong!');
+    }
   };
 
   return (
