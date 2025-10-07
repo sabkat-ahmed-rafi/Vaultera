@@ -2,7 +2,9 @@
 TODO
 ===============
 
-* now have to fix the 2fa and password CRUD operations.
+* Now i have to make the protected route 
+* And have to design the other route inside the vault then the functionaltiy 
+* Then the subscription and onetime plan
 
 * The MasterPasswordGuard and ProtectedRoute should only wrap the Vault only.
 
