@@ -1,6 +1,13 @@
+'use client'
+
+import Link from 'next/link'
 import React from 'react'
+import { useAppSelector } from '@/redux/hooks'
 
 const HeroSection = () => {
+
+  const {user} = useAppSelector(state => state.auth);
+  
   return (
     <>
       <section className="md:pt-48 pt-32 px-4 sm:px-6 lg:px-8">
@@ -17,14 +24,14 @@ const HeroSection = () => {
               protect your sensitive data with zero-knowledge architecture. Your passwords, 
               only accessible to you.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href={!user ? '/sign-in' : '/vault'} className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all duration-200 transform hover:scale-105 shadow-lg">
                 Get Started
               </button>
               <button className="px-8 py-4 border-2 border-white/20 text-white font-semibold rounded-lg hover:border-white/40 hover:bg-white/10 transition-all duration-200">
                 How It Works
               </button>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
