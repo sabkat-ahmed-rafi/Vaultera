@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { 
   RiShieldKeyholeLine,
-  RiAddLine,
   RiSearchLine,
 } from 'react-icons/ri';
 import { Button, TextField } from '@radix-ui/themes';
@@ -180,13 +179,6 @@ export default function TwoFAPage() {
             <p className="text-gray-500 mb-4">
               {searchQuery ? 'Try adjusting your search terms' : 'Add your first 2FA account to get started'}
             </p>
-            <Button 
-              onClick={() => setIsAddDialogOpen(true)}
-              style={{backgroundColor: 'white', color: 'black', cursor: 'pointer'}} 
-            >
-              <RiAddLine className="size-4 mr-2" />
-              Add 2FA Account
-            </Button>
           </div>
         )}
       </div>
