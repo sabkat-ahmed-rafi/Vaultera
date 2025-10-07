@@ -11,15 +11,16 @@ import PasswordList from "@/components/Passwords/PasswordList";
 import { PasswordItem } from "@/types/Passwords";
 import PasswordEditDialog from "@/components/Passwords/PasswordEditDialog";
 import AddPasswordDialog from "@/components/Passwords/AddPasswordDialog";
-import axios from "axios";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+import { AxiosInstance } from "axios";
 import { config } from "@/config/config";
 import { useAppSelector } from "@/redux/hooks";
 import { decryptSecret, encryptSecret } from "cryptonism";
 import toast from "react-hot-toast";
 
 
-const fetchPasswords = async (decryptedKey: Uint8Array | null): Promise<PasswordItem[]> => {
-  const res = await axios.get(`${config.backend}/api/vault/passwords`, { withCredentials: true });
+const fetchPasswords = async (decryptedKey: Uint8Array | null, axiosSecure: AxiosInstance): Promise<PasswordItem[]> => {
+  const res = await axiosSecure.get(`/api/vault/passwords`);
   const items = res.data.items as Array<{ id: string; name: string; username: string; url?: string; encryptedSecret: string; iv: string; }>;
 
   if(!decryptedKey) return items.map(i => ({ id: i.id, name: i.name, username: i.username, password: "", url: i.url }));
@@ -43,6 +44,7 @@ const PasswordsPage: React.FC = () => {
   const [editItem, setEditItem] = useState<PasswordItem | null>(null);
   const [editForm, setEditForm] = useState<PasswordItem | null>(null);
   const [addOpen, setAddOpen] = useState(false);
+  const axiosSecure = useAxiosSecure();
   const [addForm, setAddForm] = useState<PasswordItem>({
     id: "",
     name: "",
@@ -56,7 +58,7 @@ const PasswordsPage: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchPasswords(decryptedVaultKey);
+        const data = await fetchPasswords(decryptedVaultKey, axiosSecure);
         setPasswords(data);
       } catch (_) {
         toast.error("Something went wrong!");
@@ -96,13 +98,13 @@ const PasswordsPage: React.FC = () => {
       if (!decryptedVaultKey) return;
       const enc = await encryptSecret({ secret: editForm.password, decryptedKey: decryptedVaultKey });
       if(!enc?.success) throw new Error("encrypt-failed");
-      await axios.put(`${config.backend}/api/vault/passwords/${editForm.id}`, {
+      await axiosSecure.put(`/api/vault/passwords/${editForm.id}`, {
         name: editForm.name,
         username: editForm.username,
         url: editForm.url,
         encryptedSecret: enc.encryptedSecret,
         iv: enc.iv,
-      }, { withCredentials: true });
+      });
       setPasswords((prev) => prev.map((item) => (item.id === editForm.id ? editForm : item)));
       setEditItem(null);
       setEditForm(null);
@@ -113,14 +115,13 @@ const PasswordsPage: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`${config.backend}/api/vault/passwords/${id}`, { withCredentials: true });
+      await axiosSecure.delete(`/api/vault/passwords/${id}`);
       setPasswords((prev) => prev.filter((item) => item.id !== id));
     } catch (_) {
       toast.error("Something went wrong!");
     }
   };
 
-  // Add new password logic
   const handleAddChange = (field: keyof PasswordItem, value: string) => {
     setAddForm((prev) => ({ ...prev, [field]: value }));
   };
@@ -131,13 +132,13 @@ const PasswordsPage: React.FC = () => {
       if (!decryptedVaultKey) return;
       const enc = await encryptSecret({ secret: addForm.password, decryptedKey: decryptedVaultKey });
       if(!enc?.success) throw new Error("encrypt-failed");
-      const res = await axios.post(`${config.backend}/api/vault/passwords`, {
+      const res = await axiosSecure.post(`/api/vault/passwords`, {
         name: addForm.name,
         username: addForm.username,
         url: addForm.url,
         encryptedSecret: enc.encryptedSecret,
         iv: enc.iv,
-      }, { withCredentials: true });
+      });
       const created = res.data as { id: string };
       setPasswords((prev) => [ ...prev, { ...addForm, id: created.id } ]);
       setAddForm({ id: "", name: "", username: "", password: "", url: "" });
