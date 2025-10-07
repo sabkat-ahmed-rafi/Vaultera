@@ -6,7 +6,6 @@ import {
   deletePasswordEntry,
   listTwoFAEntries,
   createTwoFAEntry,
-  updateTwoFAEntry,
   deleteTwoFAEntry,
 } from "../service/vaultService";
 
@@ -51,12 +50,6 @@ export const postTwoFA = async (req: Request, res: Response) => {
   res.status(201).json(created);
 };
 
-export const putTwoFA = async (req: Request, res: Response) => {
-  if (!req.user?.id) return res.status(401).json({ message: "unauthorized" });
-  const { id } = req.params;
-  const updated = await updateTwoFAEntry(id, req.user.id, req.body);
-  res.json(updated);
-};
 
 export const removeTwoFA = async (req: Request, res: Response) => {
   if (!req.user?.id) return res.status(401).json({ message: "unauthorized" });

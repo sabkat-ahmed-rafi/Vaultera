@@ -76,13 +76,6 @@ const AccountLists2fa = ({ filteredAccounts, handleDeleteAccount }: AccountLists
                       <Button
                         variant="ghost"
                         size="1"
-                        className="text-gray-400 hover:text-white"
-                      >
-                        <RiEditLine className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="1"
                         onClick={() => handleDeleteAccount(account.id)}
                         className="text-gray-400 hover:text-red-400"
                       >
