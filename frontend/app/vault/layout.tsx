@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Sidebar from '@/components/Vault/Sidebar/Sidebar';
+import MasterPasswordGuard from "@/components/others/MasterPasswordGuard";
 
 interface LayoutProps {
   children: ReactNode;
@@ -8,10 +9,12 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-black/50 flex">
-      <Sidebar />
-      <main className="flex-1 min-h-screen overflow-auto">
-        {children}
-      </main>
+      <MasterPasswordGuard>
+        <Sidebar />
+        <main className="flex-1 min-h-screen overflow-auto">
+           {children}
+        </main>
+      </MasterPasswordGuard>
     </div>
   );
 }
