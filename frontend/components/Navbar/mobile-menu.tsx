@@ -27,7 +27,7 @@ export default function MobileMenu({ isOpen, onClose, user }: MobileMenuProps) {
             <Dialog.Title asChild>
               <Logo />
             </Dialog.Title>
-            <SettingsMenu /> 
+            { user && <SettingsMenu /> } 
             <Dialog.Close asChild>
               <button className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300 group">
                 <HiX className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" />
