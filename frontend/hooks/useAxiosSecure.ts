@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react";
 import { useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/redux/authThunks";
 import { toast } from "react-hot-toast";
+import { config } from "@/config/config";
 
 
 export const axiosSecure = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_user_service,
+    baseURL: config.backend,
     withCredentials: true,
 });
 
