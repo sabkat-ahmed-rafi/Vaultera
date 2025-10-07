@@ -16,6 +16,7 @@ import { decryptSecret, encryptSecret } from 'cryptonism';
 import Add2faDialog from '@/components/2fa/Add2faDialog';
 import AccountLists2fa from '@/components/2fa/AccountLists2fa';
 import toast from 'react-hot-toast';
+import useAxiosSecure from '@/hooks/useAxiosSecure';
 
 
 
@@ -26,6 +27,7 @@ export default function TwoFAPage() {
   const [accounts, setAccounts] = useState<TwoFAAccount[]>(mock2FAAccounts);
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const axiosSecure = useAxiosSecure();
   const [newAccount, setNewAccount] = useState<TwoFAAccountForm>({
     title: '',
     issuer: '',
@@ -91,14 +93,14 @@ export default function TwoFAPage() {
       if(!decryptedVaultKey) return;
       const enc = await encryptSecret({ secret: newAccount.secret, decryptedKey: decryptedVaultKey });
       if(!enc?.success) throw new Error('encrypt-failed');
-      const res = await axios.post(`${config.backend}/api/vault/2fa`, {
+      const res = await axiosSecure.post(`/api/vault/2fa`, {
         title: newAccount.title,
         issuer: newAccount.issuer,
         accountName: newAccount.accountName,
         notes: newAccount.notes,
         encryptedSecret: enc.encryptedSecret,
         iv: enc.iv,
-      }, { withCredentials: true });
+      });
       const created = res.data as { id: string };
       const { code, timeRemaining } = generateTOTP(newAccount.secret);
       const account: TwoFAAccount = {
@@ -118,7 +120,7 @@ export default function TwoFAPage() {
 
   const handleDeleteAccount = async (id: string) => {
     try {
-      await axios.delete(`${config.backend}/api/vault/2fa/${id}`, { withCredentials: true });
+      await axiosSecure.delete(`/api/vault/2fa/${id}`);
       setAccounts(accounts.filter(a => a.id !== id));
     } catch (_) {
       toast.error('Something went wrong!');
