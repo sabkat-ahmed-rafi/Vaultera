@@ -2,7 +2,6 @@
 TODO
 ===============
 
-* Now i have to make the protected route 
 * And have to design the other route inside the vault then the functionaltiy 
 * Then the subscription and onetime plan
 
