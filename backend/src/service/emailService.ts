@@ -14,6 +14,6 @@ export const updateEmailEntry = async (id: string, userId: string, data: UpdateE
   return prisma.emailEntry.updateMany({ where: { id, userId }, data });
 };
 
-export const deletePasswordEntry = async (id: string, userId: string) => {
+export const deleteEmailEntry = async (id: string, userId: string) => {
   return prisma.emailEntry.deleteMany({ where: { id, userId } });
 };
