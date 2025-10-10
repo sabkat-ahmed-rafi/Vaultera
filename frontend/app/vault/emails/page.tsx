@@ -129,7 +129,7 @@ const Email: React.FC = () => {
       if (!decryptedVaultKey) return;
       const enc = await encryptSecret({ secret: addForm.password, decryptedKey: decryptedVaultKey });
       if(!enc?.success) throw new Error("encrypt-failed");
-      const res = await axiosSecure.post(`/api/vault/passwords`, {
+      const res = await axiosSecure.post(`/api/vault/emails`, {
         email: addForm.email,
         username: addForm.username,
         encryptedSecret: enc.encryptedSecret,
