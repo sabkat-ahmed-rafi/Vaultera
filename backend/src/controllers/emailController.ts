@@ -7,7 +7,7 @@ import {
 } from "../service/emailService";
 
 
-export const getPasswords = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const getEmails = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!req.user?.id) { res.status(401).json({ message: "unauthorized" }); return; }
     const items = await listEmailEntries(req.user.id);
@@ -17,7 +17,7 @@ export const getPasswords = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const postPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const postEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!req.user?.id) { res.status(401).json({ message: "unauthorized" }); return; }
     const { email, username, url, encryptedSecret, iv } = req.body;
@@ -28,7 +28,7 @@ export const postPassword = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const putPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const putEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!req.user?.id) { res.status(401).json({ message: "unauthorized" }); return; }
     const { id } = req.params;
@@ -39,7 +39,7 @@ export const putPassword = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export const removePassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const removeEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!req.user?.id) { res.status(401).json({ message: "unauthorized" }); return; }
     const { id } = req.params;
