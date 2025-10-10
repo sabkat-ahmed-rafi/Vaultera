@@ -5,9 +5,9 @@ import { useAppSelector } from '@/redux/hooks';
 
 const UserLoadingWrapper = ( {children}: Readonly<{ children: React.ReactNode }> ) => {
 
-    const { user } = useAppSelector(state => state.auth);
+    const { loading } = useAppSelector(state => state.auth);
 
-    if(!user) return <div className='text-4xl flex justify-center items-center w-full h-screen font-semibold italic'>Loading...</div>
+    if(loading) return <div className='text-4xl flex justify-center items-center w-full h-screen font-semibold italic'>Loading...</div>
 
   return (
     <div>

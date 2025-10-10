@@ -13,7 +13,7 @@ interface AuthState {
 const initialState : AuthState = {
   user: null,
   decryptedVaultKey: null,
-  loading: false,
+  loading: true,
 }
 
 
