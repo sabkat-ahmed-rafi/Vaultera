@@ -30,6 +30,17 @@ export type CreateTwoFAEntryInput = {
   encryptedSecret: string;
   iv: string;
 };
+export type UpdateTwoFAEntryInput = Partial<Omit<CreateTwoFAEntryInput, "userId">>;
+
+export type CreateEmailEntryInput = {
+  userId: string;
+  email: string;
+  username: string;
+  encryptedSecret: string;
+  iv: string;
+};
+export type UpdateEmailEntryInput = Partial<Omit<CreateEmailEntryInput, "userId">>;
+
 
 export type CreatePasswordEntryInput = {
   userId: string;
@@ -41,4 +52,3 @@ export type CreatePasswordEntryInput = {
 };
 
 export type UpdatePasswordEntryInput = Partial<Omit<CreatePasswordEntryInput, "userId">>;
-export type UpdateTwoFAEntryInput = Partial<Omit<CreateTwoFAEntryInput, "userId">>;
