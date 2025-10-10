@@ -20,3 +20,25 @@ export interface JwtUser {
   photo: string | null;
   [key: string]: unknown;
 }
+
+export type CreateTwoFAEntryInput = {
+  userId: string;
+  title: string;
+  issuer: string;
+  accountName: string;
+  notes?: string | null;
+  encryptedSecret: string;
+  iv: string;
+};
+
+export type CreatePasswordEntryInput = {
+  userId: string;
+  name: string;
+  username: string;
+  url?: string | null;
+  encryptedSecret: string;
+  iv: string;
+};
+
+export type UpdatePasswordEntryInput = Partial<Omit<CreatePasswordEntryInput, "userId">>;
+export type UpdateTwoFAEntryInput = Partial<Omit<CreateTwoFAEntryInput, "userId">>;

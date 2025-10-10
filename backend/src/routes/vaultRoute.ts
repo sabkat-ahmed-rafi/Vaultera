@@ -1,14 +1,16 @@
 import { Router } from "express";
 import { verifyToken } from "../middleware/verifyToken";
 import { 
+  getTwoFA, 
+  postTwoFA, 
+  removeTwoFA
+} from "../controllers/twoFAController";
+import { 
   getPasswords,
   postPassword, 
   putPassword,
   removePassword,
-  getTwoFA, 
-  postTwoFA, 
-  removeTwoFA
-} from "../controllers/vaultController";
+} from "../controllers/passwordController";
 
 const router = Router();
 
