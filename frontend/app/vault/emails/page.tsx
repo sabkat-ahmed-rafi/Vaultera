@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import EmailList from "@/components/Emails/EmailList";
 import EmailEditDialog from "@/components/Emails/EmailEditDialog";
 import AddEmailDialog from "@/components/Emails/AddEmailDialog";
+import { TfiEmail } from "react-icons/tfi";
 
 
 const fetchEmails = async (decryptedKey: Uint8Array | null, axiosSecure: AxiosInstance): Promise<EmailItem[]> => {
@@ -147,8 +148,8 @@ const Email: React.FC = () => {
     <>
       <div className='mt-5 ml-14 md:mt-5 md:ml-5 lg:ml-10'>
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center ">
-            <RiShieldKeyholeLine className="w-6 h-6 text-green-400" />
+          <div className="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center ">
+            <TfiEmail className="w-6 h-6 text-yellow-400" />
           </div>
           <div>
             <h1 className="text-3xl font-bold text-white">Email</h1>
