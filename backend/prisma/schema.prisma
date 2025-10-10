@@ -41,6 +41,7 @@ model User {
   // Relations
   passwordEntries   PasswordEntry[]
   twoFAEntries      TwoFAEntry[]
+  emailEntries      EmailEntry[]
 }
 
 // ========================
@@ -56,6 +57,18 @@ model PasswordEntry {
   url              String?
   encryptedSecret  String   // encrypted password (base64 or hex)
   iv               String   // iv used to encrypt this password
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model EmailEntry {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  email            String
+  username         String
+  encryptedSecret  String  
+  iv               String   
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
