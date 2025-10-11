@@ -52,3 +52,13 @@ export type CreatePasswordEntryInput = {
 };
 
 export type UpdatePasswordEntryInput = Partial<Omit<CreatePasswordEntryInput, "userId">>;
+
+
+export type CreateNoteEntryInput = {
+  userId: string;
+  title: string;
+  encryptedSecret: string;
+  iv: string;
+};
+
+export type UpdateNoteEntryInput = Partial<Omit<CreateNoteEntryInput, "userId">>;
