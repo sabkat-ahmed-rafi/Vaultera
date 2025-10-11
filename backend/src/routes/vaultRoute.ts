@@ -13,6 +13,7 @@ import {
   removePassword,
 } from "../controllers/passwordController";
 import { getEmails } from "../controllers/emailController";
+import { getNotes, postNote, putNote, removeNote } from '../controllers/noteController';
 
 const router = Router();
 
@@ -34,6 +35,12 @@ router.delete('/vault/emails/:id', removeEmail);
 router.get('/vault/2fa', getTwoFA);
 router.post('/vault/2fa', postTwoFA);
 router.delete('/vault/2fa/:id', removeTwoFA);
+
+// Note entries
+router.get('/vault/notes', getNotes);
+router.post('/vault/notes', postNote);
+router.put('/vault/notes/:id', putNote);
+router.delete('/vault/notes/:id', removeNote);
 
 export default router;
 
