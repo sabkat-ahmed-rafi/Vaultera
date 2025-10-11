@@ -126,7 +126,7 @@ const NotesPage: React.FC = () => {
       if (!decryptedVaultKey) return;
       const enc = await encryptSecret({ secret: addForm.note, decryptedKey: decryptedVaultKey });
       if(!enc?.success) throw new Error("encrypt-failed");
-      const res = await axiosSecure.post(`/api/vault/passwords`, {
+      const res = await axiosSecure.post(`/api/vault/notes`, {
         name: addForm.title,
         encryptedSecret: enc.encryptedSecret,
         iv: enc.iv,
