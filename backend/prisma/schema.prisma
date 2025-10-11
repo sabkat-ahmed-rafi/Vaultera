@@ -42,6 +42,7 @@ model User {
   passwordEntries   PasswordEntry[]
   twoFAEntries      TwoFAEntry[]
   emailEntries      EmailEntry[]
+  noteEntries       NoteEntry[]
 }
 
 // ========================
@@ -83,6 +84,17 @@ model TwoFAEntry {
   encryptedSecret  String   // encrypted TOTP secret
   iv               String   // iv used to encrypt the secret
   notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model NoteEntry {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title            String
+  encryptedSecret  String   
+  iv               String   
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
