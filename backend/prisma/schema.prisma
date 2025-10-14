@@ -43,6 +43,7 @@ model User {
   twoFAEntries      TwoFAEntry[]
   emailEntries      EmailEntry[]
   noteEntries       NoteEntry[]
+  cardEntries       CardEntry[]
 }
 
 // ========================
@@ -97,4 +98,15 @@ model NoteEntry {
   iv               String   
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+model CardEntry {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  brand          String?  // e.g., Visa, Mastercard, optional plaintext for filtering
+  encryptedData  String   // JSON string containing last4, expMonth, expYear, cardholderName
+  iv             String   // IV used to encrypt this data
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
