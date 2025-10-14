@@ -62,3 +62,17 @@ export type CreateNoteEntryInput = {
 };
 
 export type UpdateNoteEntryInput = Partial<Omit<CreateNoteEntryInput, "userId">>;
+
+
+export interface CreateCardEntryInput {
+  userId: string;
+  brand?: string;
+  encryptedData: string;
+  iv: string;
+}
+
+export interface UpdateCardEntryInput {
+  brand?: string;
+  encryptedData?: string;
+  iv?: string;
+}
