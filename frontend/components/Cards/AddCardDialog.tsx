@@ -1,14 +1,7 @@
 import React from "react";
 import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
-import { CardItem } from "@/types/Cards";
+import { AddCardDialogProps } from "@/types/Cards";
 
-export interface AddCardDialogProps {
-  addOpen: boolean;
-  setAddOpen: (open: boolean) => void;
-  addForm: CardItem;
-  handleAddChange: (field: keyof CardItem, value: string) => void;
-  handleAddSave: () => void;
-}
 
 const AddCardDialog: React.FC<AddCardDialogProps> = ({
   addOpen,

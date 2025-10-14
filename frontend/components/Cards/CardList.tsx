@@ -1,13 +1,7 @@
 import React from "react";
 import { Button, Flex, Table, Text } from "@radix-ui/themes";
-import { CardItem } from "@/types/Cards";
+import { CardListProps } from "@/types/Cards";
 
-export interface CardListProps {
-  loading: boolean;
-  filteredCards: CardItem[];
-  handleEditClick: (item: CardItem) => void;
-  handleDelete: (id: string) => void;
-}
 
 const CardList: React.FC<CardListProps> = ({
   loading,

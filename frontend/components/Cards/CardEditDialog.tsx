@@ -1,14 +1,7 @@
 import React from "react";
 import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
-import { CardItem } from "@/types/Cards";
+import { CardEditDialogProps } from "@/types/Cards";
 
-export interface CardEditDialogProps {
-  editItem: CardItem | null;
-  setEditItem: (item: CardItem | null) => void;
-  editForm: CardItem | null;
-  handleEditChange: (field: keyof CardItem, value: string) => void;
-  handleEditSave: () => void;
-}
 
 const CardEditDialog: React.FC<CardEditDialogProps> = ({
   editItem,
