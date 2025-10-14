@@ -1,19 +1,39 @@
-import { postEmail, putEmail, removeEmail } from './../controllers/emailController';
 import { Router } from "express";
 import { verifyToken } from "../middleware/verifyToken";
+
+import { 
+  postEmail, 
+  putEmail, 
+  removeEmail, 
+  getEmails 
+} from './../controllers/emailController';
+
 import { 
   getTwoFA, 
   postTwoFA, 
   removeTwoFA
 } from "../controllers/twoFAController";
+
 import { 
   getPasswords,
   postPassword, 
   putPassword,
   removePassword,
 } from "../controllers/passwordController";
-import { getEmails } from "../controllers/emailController";
-import { getNotes, postNote, putNote, removeNote } from '../controllers/noteController';
+
+import { 
+  getNotes, 
+  postNote, 
+  putNote, 
+  removeNote
+} from '../controllers/noteController';
+
+import { 
+  getCards, 
+  postCard, 
+  putCard, 
+  removeCard 
+} from "../controllers/cardController";
 
 const router = Router();
 
@@ -41,6 +61,12 @@ router.get('/vault/notes', getNotes);
 router.post('/vault/notes', postNote);
 router.put('/vault/notes/:id', putNote);
 router.delete('/vault/notes/:id', removeNote);
+
+// Card entries
+router.get('/vault/cards', getCards);
+router.post('/vault/cards', postCard);
+router.put('/vault/cards/:id', putCard);
+router.delete('/vault/cards/:id', removeCard);
 
 export default router;
 
