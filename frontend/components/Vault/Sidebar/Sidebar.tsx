@@ -19,6 +19,8 @@ import {
 } from 'react-icons/ri';
 import { cn } from '@/lib/clsx/clsx';
 import Logo from '@/components/Logo/Logo';
+import { logout } from '@/redux/authThunks';
+import { useAppDispatch } from '@/redux/hooks';
 
 const navigationItems = [
   {
@@ -66,6 +68,15 @@ const navigationItems = [
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const dispatch = useAppDispatch();
+
+  const signOut = async () => {
+    try {
+      await dispatch(logout()).unwrap();
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : String(error))
+    }
+  }
 
   return (
     <>
@@ -134,7 +145,7 @@ export default function Sidebar() {
                 <RiSettingsLine className="w-5 h-5" />
                 <span>Settings</span>
               </Link>
-              <button className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all duration-200 w-full">
+              <button onClick={signOut} className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all duration-200 w-full">
                 <RiLogoutBoxLine className="w-5 h-5" />
                 <span>Logout</span>
               </button>
