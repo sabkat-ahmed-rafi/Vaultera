@@ -15,7 +15,7 @@ const Logo = () => {
            style={{ fontFamily: 'var(--font-black-han-sans)' }} 
            className={`${blackHanSans.variable} md:text-5xl text-3xl`}
            >
-            Keynism
+            Vaultera
           </Link>
           <p
            className={`md:text-[13px] text-[10px] italic font-thin`}

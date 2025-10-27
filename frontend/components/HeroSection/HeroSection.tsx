@@ -16,11 +16,11 @@ const HeroSection = () => {
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-8 px-10">
                 Take Control of Your Privacy with{' '}
                 <span className="text-gray-300">
-                  Keynism
+                  Vaultera
                 </span>
             </h1>
             <p className="text-xl sm:text-2xl text-gray-400 max-w-3xl mx-auto mb-12">
-              Keynism is your end-to-end encrypted password manager — built to 
+              Vaultera is your end-to-end encrypted password manager — built to 
               protect your sensitive data with zero-knowledge architecture. Your passwords, 
               only accessible to you.
             </p>
