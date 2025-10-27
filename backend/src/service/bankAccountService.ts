@@ -13,7 +13,6 @@ export type UpdateBankAccountEntryInput = Partial<Omit<CreateBankAccountEntryInp
 
 export const listBankAccountEntries = async (userId: string) => {
   const res = prisma.bankAccountEntry.findMany({ where: { userId }, orderBy: { createdAt: "desc" } });
-  console.log(res)
   return res;
 };
 

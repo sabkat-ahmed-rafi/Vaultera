@@ -8,7 +8,6 @@ import {
 
 export const getTwoFA = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    console.log(req.user)
     if (!req.user?.id) { res.status(401).json({ message: "unauthorized" }); return; }
     const items = await listTwoFAEntries(req.user.id);
     res.json({ items });
