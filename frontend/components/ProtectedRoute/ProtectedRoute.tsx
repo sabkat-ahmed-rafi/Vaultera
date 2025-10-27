@@ -14,7 +14,12 @@ const PrivateRoute = ( { children }: Readonly<{ children: React.ReactNode }> ) =
     useEffect(() => {
         if (!loading && !user) {
             router.push('/sign-in');
-          }
+        };
+
+        if (user && !user?.paid) {
+            router.push('/pricing');
+        };
+
     }, [loading, user, router]);
 
 
@@ -28,7 +33,7 @@ const PrivateRoute = ( { children }: Readonly<{ children: React.ReactNode }> ) =
 
     
     
-    if(user) return <>{children}</>
+    if(user && user?.paid) return <>{children}</>
 
 }
 
