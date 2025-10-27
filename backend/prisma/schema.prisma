@@ -44,6 +44,8 @@ model User {
   emailEntries      EmailEntry[]
   noteEntries       NoteEntry[]
   cardEntries       CardEntry[]
+  bankAccountEntries BankAccountEntry[]
+  identityEntries   IdentityEntry[]
 }
 
 // ========================
@@ -109,4 +111,32 @@ model CardEntry {
   iv             String   // IV used to encrypt this data
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+}
+
+model BankAccountEntry {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bankName         String
+  routingNumber    String?
+  accountType      String?
+  encryptedSecret  String   // encrypted account number
+  iv               String   // iv used to encrypt account number
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model IdentityEntry {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName        String
+  lastName         String
+  email            String?
+  phone            String?
+  address          String?
+  encryptedSecret  String   // encrypted SSN
+  iv               String   // iv used to encrypt SSN
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
