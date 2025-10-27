@@ -72,7 +72,6 @@ export default function TwoFAPage() {
          }));
          setAccounts(mapped);
        } catch (error) {
-         console.log('Failed to fetch accounts:', error);
          toast.error('Something went wrong!')
        }
       }

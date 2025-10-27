@@ -17,6 +17,7 @@ import {
 } from 'react-icons/ri';
 import { Card, TextField } from '@radix-ui/themes';
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+import toast from 'react-hot-toast';
 
 interface VaultCounts {
   passwords: number;
@@ -131,7 +132,7 @@ export default function Dashboard() {
           identities: identitiesRes.data.items?.length || 0
         });
       } catch (error) {
-        console.log('Failed to fetch vault counts:', error);
+        toast.error('Something went wrong');
       } finally {
         setLoading(false);
       }
