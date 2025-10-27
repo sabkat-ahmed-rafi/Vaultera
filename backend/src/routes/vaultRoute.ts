@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { verifyToken } from "../middleware/verifyToken";
-
 import { 
   postEmail, 
   putEmail, 
@@ -35,6 +34,20 @@ import {
   removeCard 
 } from "../controllers/cardController";
 
+import { 
+  getBankAccounts, 
+  postBankAccount, 
+  putBankAccount, 
+  removeBankAccount 
+} from "../controllers/bankAccountController";
+
+import { 
+  getIdentities, 
+  postIdentity, 
+  putIdentity, 
+  removeIdentity 
+} from "../controllers/identityController";
+
 const router = Router();
 
 router.use(verifyToken);
@@ -68,6 +81,22 @@ router.post('/vault/cards', postCard);
 router.put('/vault/cards/:id', putCard);
 router.delete('/vault/cards/:id', removeCard);
 
+// Bank Account entries
+router.get('/vault/bank-accounts', getBankAccounts);
+router.post('/vault/bank-accounts', postBankAccount);
+router.put('/vault/bank-accounts/:id', putBankAccount);
+router.delete('/vault/bank-accounts/:id', removeBankAccount);
+
+// Identity entries
+router.get('/vault/identities', getIdentities);
+router.post('/vault/identities', postIdentity);
+router.put('/vault/identities/:id', putIdentity);
+router.delete('/vault/identities/:id', removeIdentity);
+
+
+
 export default router;
+
+
 
 
