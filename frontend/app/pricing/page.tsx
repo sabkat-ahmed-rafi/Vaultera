@@ -55,7 +55,7 @@ const Pricing: React.FC = () => {
               </div>
 
               <div className="mt-6 flex items-end gap-2">
-                  <span className="text-4xl md:text-5xl font-bold text-white">$4.99</span>
+                  <span className="text-4xl md:text-5xl font-bold text-white">$1</span>
                   <span className="text-gray-400 mb-1">/mo</span>
               </div>
 
@@ -99,7 +99,7 @@ const Pricing: React.FC = () => {
               </div>
 
               <div className="mt-6 flex items-end gap-2">
-                  <span className="text-4xl md:text-5xl font-bold text-white">$49</span>
+                  <span className="text-4xl md:text-5xl font-bold text-white">$40</span>
                   <span className="text-gray-400 mb-1">one‑time</span>
               </div>
 
