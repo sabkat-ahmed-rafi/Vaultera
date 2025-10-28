@@ -2,9 +2,4 @@
 TODO
 ===============
 
-* And have to design the other route inside the vault then the functionaltiy 
-* Then the subscription and onetime plan
-
-* The MasterPasswordGuard and ProtectedRoute should only wrap the Vault only.
-
-* Now to encrypt and decrypt Vault secrets, I need to save the decryptedVaultKey after sign-up and sign-in  in the redux global user-state. So that I can use the decryptedVaultKey to encrypt and decrypt Vault secrets. For this I have to use - AES-GCM.
+* Now I have to change the paddle to sandbox mode.
