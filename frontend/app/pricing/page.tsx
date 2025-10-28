@@ -3,7 +3,9 @@
 import React from 'react'
 import { Card, Button, Box, Flex, Text, Badge, Separator } from '@radix-ui/themes'
 import { RiShieldKeyholeLine, RiVipCrown2Line, RiShieldLine, RiKeyLine, RiFileTextLine, RiUserLine, RiBankCardLine, RiBankLine, RiMailLine } from 'react-icons/ri'
-import Link from 'next/link'
+import { useAppSelector } from '@/redux/hooks'
+import toast from 'react-hot-toast'
+import useAxiosSecure from '@/hooks/useAxiosSecure'
 
 const features: Array<{ icon: React.ReactNode; label: string }> = [
   { icon: <RiShieldLine className="text-green-400" />, label: 'Client-side vault encryption (master key stays local)' },
@@ -17,6 +19,24 @@ const features: Array<{ icon: React.ReactNode; label: string }> = [
 ]
 
 const Pricing: React.FC = () => {
+
+  const { user } = useAppSelector(state => state.auth)
+  const axisoSecure = useAxiosSecure()
+  
+
+  const startCheckout = async (type: 'subscription' | 'lifetime') => {
+    try {
+      const res = await axisoSecure.post(`/api/paddle/checkout/${type}`)
+      const url = res.data?.url
+      if(url) {
+        window.location.href = url
+      } else {
+        toast.error('Unable to start checkout')
+      }
+    } catch (_) {
+      toast.error('Something went wrong')
+    }
+  }
 
   return (
     <section>
@@ -56,7 +76,7 @@ const Pricing: React.FC = () => {
 
               <div className="mt-6 flex items-end gap-2">
                   <span className="text-4xl md:text-5xl font-bold text-white">$1</span>
-                  <span className="text-gray-400 mb-1">/mo</span>
+                  <span className="text-gray-400 mb-1">/month</span>
               </div>
 
               <Separator my="4" size="4" className="bg-gray-700/60" />
@@ -71,7 +91,7 @@ const Pricing: React.FC = () => {
               </ul>
 
               <Flex mt="5" gap="3">
-                  <Button size="3" className="!cursor-pointer" style={{ width: '100%', backgroundColor: 'white', color: 'black' }}>
+                  <Button size="3" className="!cursor-pointer" style={{ width: '100%', backgroundColor: 'white', color: 'black' }} onClick={() => startCheckout('subscription')}>
                     Subscribe now
                   </Button>
               </Flex>
@@ -115,7 +135,7 @@ const Pricing: React.FC = () => {
               </ul>
 
               <Flex mt="5" gap="3">
-                  <Button size="3" className="!cursor-pointer" color="purple" style={{ width: '100%', backgroundColor: 'white', color: 'black' }}>
+                  <Button size="3" className="!cursor-pointer" color="purple" style={{ width: '100%', backgroundColor: 'white', color: 'black' }} onClick={() => startCheckout('lifetime')}>
                     Get lifetime access
                   </Button>
               </Flex>
