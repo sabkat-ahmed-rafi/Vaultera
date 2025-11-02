@@ -1,13 +1,10 @@
 import Unlock from "./Unlock";
 
-export const dynamic = "force-dynamic"; // ensures dynamic rendering
+export const dynamic = "force-dynamic"; 
 
-interface PageProps {
-  searchParams: { redirect?: string };
-}
 
-export default function Page({ searchParams }: PageProps) {
-  // decode redirect server-side
+export default function Page({ searchParams }: any) {
+ 
   const redirect = searchParams.redirect ? decodeURIComponent(searchParams.redirect) : "/";
 
   return <Unlock redirect={redirect} />;
