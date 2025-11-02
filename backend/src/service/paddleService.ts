@@ -20,7 +20,7 @@ interface PaddleCheckoutResponse {
 export const createPaddleCheckout = async (input: CreateCheckoutInput): Promise<PaddleCheckoutResponse> => {
   if(!config.paddle_api_key) throw new Error('Missing Paddle API key')
 
-  const res = await fetch('https://api.paddle.com/checkout-links', {
+  const res = await fetch('https://sandbox-api.paddle.com/checkout-links', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${config.paddle_api_key}`,
