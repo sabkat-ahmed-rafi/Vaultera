@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic';
+
 import Logo from '@/components/Logo/Logo';
 import { decryptGeneratedKey } from 'cryptonism';
 import { setDecryptedVaultKey } from '@/redux/authSlice';
