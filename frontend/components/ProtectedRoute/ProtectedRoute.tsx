@@ -16,10 +16,6 @@ const PrivateRoute = ( { children }: Readonly<{ children: React.ReactNode }> ) =
             router.push('/sign-in');
         };
 
-        if (user && !user?.paid) {
-            router.push('/pricing');
-        };
-
     }, [loading, user, router]);
 
 
@@ -33,7 +29,7 @@ const PrivateRoute = ( { children }: Readonly<{ children: React.ReactNode }> ) =
 
     
     
-    if(user && user?.paid) return <>{children}</>
+    if(user) return <>{children}</>
 
 }
 
