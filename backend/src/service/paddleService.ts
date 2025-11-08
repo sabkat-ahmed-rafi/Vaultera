@@ -20,6 +20,15 @@ interface PaddleCheckoutResponse {
 export const createPaddleCheckout = async (input: CreateCheckoutInput): Promise<PaddleCheckoutResponse> => {
   if(!config.paddle_api_key) throw new Error('Missing Paddle API key')
 
+    console.log("Paddle checkout payload:", JSON.stringify({
+  items: [ { price_id: input.priceId, quantity: 1 } ],
+  customer: { email: input.customerEmail },
+  success_url: input.successUrl,
+  cancel_url: input.cancelUrl,
+  custom_data: input.metadata ?? {}
+}, null, 2));
+
+
   const res = await fetch('https://sandbox-api.paddle.com/checkout-links', {
     method: 'POST',
     headers: {

@@ -14,6 +14,8 @@ export const createCheckout = async (req: Request, res: Response): Promise<void>
   const successUrl = `${config.frontend}/pricing?checkout=success`
   const cancelUrl = `${config.frontend}/pricing?checkout=cancel`
 
+  console.log(successUrl, cancelUrl);
+
   const checkout = await createPaddleCheckout({
     priceId,
     customerEmail: req.user.email,
