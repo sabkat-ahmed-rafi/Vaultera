@@ -48,6 +48,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     res.status(201).json({ message: "User found", user });
   } catch (error: any) {
     next(error);
+    console.log(error)
     res.status(500).json({ error: error.message });
   }
 };
