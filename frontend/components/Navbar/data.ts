@@ -19,7 +19,7 @@ export const navigation: NavigationItem[] = [
   },
   { 
     name: 'Support', 
-    href: '/Support',
+    href: '/support',
     description: 'Need help? Start here'
   },
   // {
