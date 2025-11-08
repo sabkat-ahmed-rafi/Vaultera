@@ -11,7 +11,7 @@ export const createCheckout = async (req: Request, res: Response): Promise<void>
   const priceId = type === 'subscription' ? config.paddle_price_subscription : config.paddle_price_lifetime
   if(!priceId) { res.status(500).json({ message: 'price not configured' }); return }
 
-  const successUrl = `${config.frontend}/?checkout=success`
+  const successUrl = `${config.frontend}/pricing?checkout=success`
   const cancelUrl = `${config.frontend}/pricing?checkout=cancel`
 
   const checkout = await createPaddleCheckout({
