@@ -1,4 +1,4 @@
-import HeroSection from "@/components/HeroSection/HeroSection";
+import HeroSection from "@/components/Sections/HeroSection";
 import Navbar from "@/components/Navbar/Navbar";
 import UserLoadingWrapper from "@/components/others/UserLoadingWrapper";
 import FeaturesSection from "@/components/Sections/FeaturesSection";

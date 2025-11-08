@@ -9,12 +9,12 @@ import {
 export const navigation: NavigationItem[] = [
   { 
     name: 'Features', 
-    href: '/features',
+    href: '#features',
     description: 'Key features of our platform'
   },
   { 
     name: 'Security', 
-    href: '/security',
+    href: '#security',
     description: 'How we protect your data'
   },
   { 

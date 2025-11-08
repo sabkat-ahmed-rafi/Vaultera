@@ -26,7 +26,7 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <section className="py-28 px-6 md:px-12 lg:px-24 relative">
+    <section id="features" className="py-28 px-6 md:px-12 lg:px-24 relative">
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}

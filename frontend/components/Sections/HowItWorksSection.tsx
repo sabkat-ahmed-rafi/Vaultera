@@ -18,7 +18,7 @@ export default function HowItWorksSection() {
   ];
 
   return (
-    <section className="py-28 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-[#101020] to-[#0a0a0f]">
+    <section id={'howitworks'} className="py-28 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-[#101020] to-[#0a0a0f]">
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

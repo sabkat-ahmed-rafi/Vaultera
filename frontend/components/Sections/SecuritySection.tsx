@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export default function SecuritySection() {
   return (
-    <section className="relative py-32 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-[#0a0a0f] to-[#111122] text-center">
+    <section id={'security'} className="relative py-32 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-[#0a0a0f] to-[#111122] text-center">
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
