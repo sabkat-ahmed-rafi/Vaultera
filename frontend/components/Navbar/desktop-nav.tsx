@@ -48,7 +48,7 @@ export default function DesktopNav() {
               <NavigationMenu.Link asChild>
                 <Link
                   href={item.href}
-                  className="group relative flex items-center xl:px-6 px-2 py-2.5 text-white hover:text-gray-200 font-semibold transition-all duration-300 rounded-[2px] hover:bg-white/10 overflow-hidden"
+                  className="group relative flex items-center xl:px-6 px-2 py-2.5 text-white hover:text-gray-200 font-semibold transition-all duration-300 rounded-[2px] hover:bg-white/10 overflow-hidden text-sm"
                 >
                   <span className="relative z-10">{item.name}</span>
                   <div className="absolute inset-0 bg-white/5 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-[2px]"></div>

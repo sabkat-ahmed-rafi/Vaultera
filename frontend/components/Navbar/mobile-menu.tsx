@@ -38,7 +38,7 @@ export default function MobileMenu({ isOpen, onClose, user }: MobileMenuProps) {
           <div className="flex-1 py-8 overflow-y-auto">
           {/* Vault Button */}
           {
-              user?.paid && <div className="px-6">
+              user && <div className="px-6">
              <Link href={'/vault'}>
               <button className="w-full relative group px-8 py-5 bg-white text-black font-bold rounded-3xl overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-700">
                 <span className="relative z-10 flex items-center justify-center space-x-3">
@@ -93,22 +93,7 @@ export default function MobileMenu({ isOpen, onClose, user }: MobileMenuProps) {
                   )}
                 </div>
               ))}
-            </div>
-
-            {/* Mobile plan button */}
-              {
-                !user?.paid && <div className="px-6 mt-10">
-             <Link href={'/pricing'}>
-              <button className="w-full relative group px-8 py-5 bg-white text-black font-bold rounded-3xl overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-700">
-                <span className="relative z-10 flex items-center justify-center space-x-3">
-                  <HiLightningBolt className="w-6 h-6 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300" />
-                  <span className="text-lg">Plan</span>
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              </button>
-             </Link>
-            </div>
-              }
+            </div>         
 
             {/* Social Links */}
             <div className="px-6 mt-10">

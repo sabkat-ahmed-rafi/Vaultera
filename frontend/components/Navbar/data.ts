@@ -18,11 +18,6 @@ export const navigation: NavigationItem[] = [
     description: 'How we protect your data'
   },
   { 
-    name: 'Pricing', 
-    href: '/pricing',
-    description: 'Choose the plan that suits you'
-  },
-  { 
     name: 'Support', 
     href: '/Support',
     description: 'Need help? Start here'

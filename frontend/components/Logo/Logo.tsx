@@ -13,12 +13,12 @@ const Logo = () => {
         <div className='text-center p-5 select-none inline-block'>
           <Link href={'/'} 
            style={{ fontFamily: 'var(--font-black-han-sans)' }} 
-           className={`${blackHanSans.variable} md:text-5xl text-3xl`}
+           className={`${blackHanSans.variable} md:text-4xl text-3xl`}
            >
             Vaultera
           </Link>
           <p
-           className={`md:text-[13px] text-[10px] italic font-thin`}
+           className={`md:text-[12px] text-[10px] italic font-thin`}
            >
             Every Secret, Sealed Tight ⚡︎
           </p>
