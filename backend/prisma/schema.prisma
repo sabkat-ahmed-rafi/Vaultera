@@ -25,15 +25,6 @@ model User {
   iv                     String                          // 12-byte IV (base64 or utf-8)
   encryptedVaultKey      String                          // Encrypted vault key (base64)
 
-  // User payment info
-  paid                   Boolean   @default(false)
-  paymentType            String?                         // 'subscription' | 'one_time'
-  paddleCustomerId       String?                         // Paddle user ID
-  paddleSubscriptionId   String?                         // Only for subscription
-  subscriptionStatus     String?                         // 'active', 'canceled', etc.
-  paymentExpiresAt       DateTime?                       // Next billing or expiry date
-
-
   
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
