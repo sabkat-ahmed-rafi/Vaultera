@@ -28,7 +28,7 @@ export default function ProfileUpdateCard() {
         setName(user.name);
         setPhoto(user.photo);
       } catch (err) {
-        console.log("Failed to load user", err);
+        toast.error("Something went wrong");
       }
     })();
   }, []);
@@ -83,7 +83,6 @@ export default function ProfileUpdateCard() {
       setPreview(null);
       setFile(null);
     } catch (error) {
-      console.log("Profile update failed:", error);
       toast.error("Failed to update profile. Please try again.");
     } finally {
       setIsSaving(false);
@@ -145,7 +144,7 @@ export default function ProfileUpdateCard() {
               onClick={() => fileInputRef.current?.click()}
             >
               <Image
-                src={preview || photo}
+                src={preview || photo || "/profile.jpg"}
                 alt="Profile"
                 fill
                 style={{ objectFit: "cover" }}
