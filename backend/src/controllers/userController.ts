@@ -4,14 +4,19 @@ import { getUserById, updateUserProfile } from "../service/userService";
 export const getCurrentUser = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    if (!userId) return res.status(401).json({ message: "Unauthorized" });
+    if (!userId) {
+        res.status(401).json({ message: "Unauthorized" });
+        return 
+    }
 
     const user = await getUserById(userId);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) {
+        res.status(404).json({ message: "User not found" });
+        return 
+    }
 
     res.json(user);
   } catch (error) {
-    console.error("Error fetching user:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -19,12 +24,16 @@ export const getCurrentUser = async (req: Request, res: Response) => {
 export const updateProfile = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
-    if (!userId) return res.status(401).json({ message: "Unauthorized" });
+    if (!userId) {
+        res.status(401).json({ message: "Unauthorized" });
+        return 
+    }
 
     const { name, photo } = req.body;
 
     if (!name && !photo) {
-      return res.status(400).json({ message: "No fields to update" });
+      res.status(400).json({ message: "No fields to update" });
+      return 
     }
 
     const updatedUser = await updateUserProfile(userId, { name, photo });
@@ -34,7 +43,6 @@ export const updateProfile = async (req: Request, res: Response) => {
       user: updatedUser,
     });
   } catch (error) {
-    console.error("Error updating profile:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
