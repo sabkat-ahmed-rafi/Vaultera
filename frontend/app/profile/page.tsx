@@ -1,36 +1,104 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import axios from "axios";
 import { Button, Card, Flex, Text, TextField } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import { FaCameraRetro } from "react-icons/fa";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 export default function ProfileUpdateCard() {
-  const [name, setName] = useState("John Doe");
-  const [photo, setPhoto] = useState("/profile.jpg");
+  const [currentUser, setCurrentUser] = useState<{ name: string; photo: string } | null>(null);
+  const [name, setName] = useState("");
+  const [photo, setPhoto] = useState("");
   const [preview, setPreview] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const axiosSecure = useAxiosSecure()
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axiosSecure.get("/api/user/me");
+        const user = res.data;
+        setCurrentUser(user);
+        setName(user.name);
+        setPhoto(user.photo);
+      } catch (err) {
+        console.log("Failed to load user", err);
+      }
+    })();
+  }, []);
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
       const reader = new FileReader();
       reader.onload = () => setPreview(reader.result as string);
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(selectedFile);
     }
   };
 
-  const handleSave = async () => {
-    setIsSaving(true);
-    await new Promise((r) => setTimeout(r, 800));
-    if (preview) setPhoto(preview);
-    setPreview(null);
-    setIsSaving(false);
+  const uploadToCloudinary = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_PRESET!);
+
+    const res = await axios.post(
+      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+      formData
+    );
+    return res.data.secure_url;
   };
 
-  const isChanged = preview || name !== "John Doe";
+  const handleSave = async () => {
+    if (!currentUser) return;
+    try {
+      setIsSaving(true);
+
+      let uploadedUrl = photo;
+
+      if (file) {
+        uploadedUrl = await uploadToCloudinary(file);
+      }
+
+      const payload: any = {};
+      if (name !== currentUser.name) payload.name = name;
+      if (file) payload.photo = uploadedUrl;
+
+      if (Object.keys(payload).length === 0) {
+        setIsSaving(false);
+        return;
+      }
+
+      await axiosSecure.put("/api/user/update-profile", payload);
+
+      // Update UI
+      setCurrentUser((prev) => (prev ? { ...prev, ...payload } : null));
+      setPhoto(uploadedUrl);
+      setPreview(null);
+      setFile(null);
+    } catch (error) {
+      console.log("Profile update failed:", error);
+      toast.error("Failed to update profile. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  if (!currentUser) {
+    return (
+      <Flex align="center" justify="center" style={{ minHeight: "100vh", background: "black", color: "white" }}>
+        <Text>Loading profile...</Text>
+      </Flex>
+    );
+  }
+
+  const isChanged = preview || name !== currentUser.name;
 
   return (
     <Flex
@@ -61,7 +129,6 @@ export default function ProfileUpdateCard() {
           }}
         >
           <Flex direction="column" align="center" gap="5" style={{ width: "100%" }}>
-            
             {/* Profile Photo */}
             <motion.div
               whileHover={{ scale: 1.03 }}
@@ -81,9 +148,7 @@ export default function ProfileUpdateCard() {
                 src={preview || photo}
                 alt="Profile"
                 fill
-                style={{
-                  objectFit: "cover",
-                }}
+                style={{ objectFit: "cover" }}
               />
               <motion.div
                 whileHover={{ opacity: 1, scale: 1.05 }}
