@@ -14,13 +14,13 @@ import {
   RiDashboardLine,
   RiMenuLine,
   RiCloseLine,
-  RiSettingsLine,
   RiLogoutBoxLine
 } from 'react-icons/ri';
 import { cn } from '@/lib/clsx/clsx';
 import Logo from '@/components/Logo/Logo';
 import { logout } from '@/redux/authThunks';
 import { useAppDispatch } from '@/redux/hooks';
+import { HiUser } from 'react-icons/hi';
 
 const navigationItems = [
   {
@@ -139,11 +139,11 @@ export default function Sidebar() {
           <div className="p-4 border-t border-gray-700/50">
             <div className="space-y-2">
               <Link
-                href="/settings"
+                href="/profile"
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all duration-200"
               >
-                <RiSettingsLine className="w-5 h-5" />
-                <span>Settings</span>
+                <HiUser className="w-5 h-5" />
+                <span>Profile</span>
               </Link>
               <button onClick={signOut} className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all duration-200 w-full">
                 <RiLogoutBoxLine className="w-5 h-5" />
