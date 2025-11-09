@@ -26,9 +26,11 @@ const SettingsMenu = () => {
                         sideOffset={12}
                         align="end"
                       >
-                        <DropdownMenu.Item className="flex items-center space-x-3 px-5 py-4 rounded-2xl text-white hover:bg-white/10 transition-all duration-300 cursor-pointer">
-                          <HiUser className="w-5 h-5" />
-                          <span className="font-semibold">Profile</span>
+                        <DropdownMenu.Item className="rounded-2xl text-white hover:bg-white/10 transition-all duration-300 cursor-pointer">
+                          <Link href={'/profile'} className='w-full flex items-start space-x-3 px-5 py-4'>
+                            <HiUser className="w-5 h-5" />
+                            <span className="font-semibold">Profile</span>
+                          </Link>
                         </DropdownMenu.Item>
                         <DropdownMenu.Separator className="h-px bg-white/10 my-2" />
                         <DropdownMenu.Item className="rounded-2xl text-red-400 hover:bg-red-500/10 transition-all duration-300 cursor-pointer">

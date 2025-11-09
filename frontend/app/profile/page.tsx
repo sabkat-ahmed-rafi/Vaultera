@@ -1,0 +1,183 @@
+"use client";
+
+import React, { useState, useRef } from "react";
+import Image from "next/image";
+import { Button, Card, Flex, Text, TextField } from "@radix-ui/themes";
+import { motion } from "framer-motion";
+import { FaCameraRetro } from "react-icons/fa";
+
+export default function ProfileUpdateCard() {
+  const [name, setName] = useState("John Doe");
+  const [photo, setPhoto] = useState("/profile.jpg");
+  const [preview, setPreview] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => setPreview(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    await new Promise((r) => setTimeout(r, 800));
+    if (preview) setPhoto(preview);
+    setPreview(null);
+    setIsSaving(false);
+  };
+
+  const isChanged = preview || name !== "John Doe";
+
+  return (
+    <Flex
+      align="center"
+      justify="center"
+      style={{
+        minHeight: "100vh",
+        background: "black",
+        padding: "1rem",
+        color: "white",
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 20, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        style={{ width: "100%", maxWidth: 420 }}
+      >
+        <Card
+          size="3"
+          style={{
+            width: "100%",
+            padding: "2rem",
+            borderRadius: "1.5rem",
+            background: "#111",
+            border: "1px solid #222",
+            boxShadow: "0 10px 30px rgba(255,255,255,0.05)",
+          }}
+        >
+          <Flex direction="column" align="center" gap="5" style={{ width: "100%" }}>
+            
+            {/* Profile Photo */}
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              style={{
+                position: "relative",
+                width: "130px",
+                height: "130px",
+                cursor: "pointer",
+                borderRadius: "50%",
+                overflow: "hidden",
+                border: "3px solid white",
+                boxShadow: "0 0 20px rgba(255,255,255,0.15)",
+              }}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <Image
+                src={preview || photo}
+                alt="Profile"
+                fill
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+              <motion.div
+                whileHover={{ opacity: 1, scale: 1.05 }}
+                initial={{ opacity: 0 }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "rgba(0,0,0,0.55)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "opacity 0.2s",
+                }}
+              >
+                <FaCameraRetro size={28} color="white" />
+              </motion.div>
+            </motion.div>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handlePhotoChange}
+            />
+
+            {/* Name Input */}
+            <Flex direction="column" gap="2" style={{ width: "100%" }}>
+              <Text size="2" weight="medium" color="gray">
+                Your Name
+              </Text>
+              <motion.div whileFocus={{ scale: 1.02 }}>
+                <TextField.Root
+                  size="3"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your name"
+                  style={{
+                    width: "100%",
+                    borderRadius: "10px",
+                    background: "#000",
+                    border: "1px solid #333",
+                    fontSize: "1rem",
+                    color: "white",
+                    outline: "none",
+                    transition: "all 0.2s ease",
+                  }}
+                  onFocus={(e) =>
+                    (e.currentTarget.style.border = "1px solid white")
+                  }
+                  onBlur={(e) =>
+                    (e.currentTarget.style.border = "1px solid #333")
+                  }
+                />
+              </motion.div>
+            </Flex>
+
+            {/* Save Button */}
+            <motion.div
+              whileHover={isChanged ? { scale: 1.05 } : {}}
+              whileTap={{ scale: 0.97 }}
+              style={{ width: "100%", marginTop: "1rem" }}
+            >
+              <Button
+                size="3"
+                color="gray"
+                variant="solid"
+                disabled={!isChanged || isSaving}
+                onClick={handleSave}
+                style={{
+                  width: "100%",
+                  borderRadius: 12,
+                  background: isChanged ? "white" : "#222",
+                  color: isChanged ? "black" : "#666",
+                  transition: "all 0.25s ease",
+                  fontWeight: 600,
+                  letterSpacing: "0.5px",
+                  padding: "1rem",
+                }}
+              >
+                {isSaving
+                  ? "Saving..."
+                  : isChanged
+                  ? "Save Changes"
+                  : "No Changes"}
+              </Button>
+            </motion.div>
+
+            <Text size="1" color="gray" align="center">
+              Only changed fields will be updated.
+            </Text>
+          </Flex>
+        </Card>
+      </motion.div>
+    </Flex>
+  );
+}
