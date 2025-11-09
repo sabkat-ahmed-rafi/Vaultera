@@ -6,7 +6,7 @@ import { verifyToken } from "../middleware/verifyToken";
 
 const router = express.Router();
 
-router.get("/me", verifyToken, getCurrentUser);
-router.put("/update-profile", verifyToken, updateProfile);
+router.get("/user/me", verifyToken, getCurrentUser);
+router.put("/user/update-profile", verifyToken, updateProfile);
 
 export default router;
