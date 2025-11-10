@@ -19,8 +19,8 @@ app.use(cors({
 }))
 
 // Routes
-app.use('/api', authRoutes);
-app.use('/api', vaultRoutes);
-app.use("/api", userRoutes);
+app.use(authRoutes);
+app.use(vaultRoutes);
+app.use(userRoutes);
 
 export default app;
