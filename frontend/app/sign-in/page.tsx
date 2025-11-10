@@ -49,7 +49,7 @@ const SignIn = () => {
       const masterPassword = data.masterKey;
 
       const fetchedUser = await axios.get(`${config.backend}/api/auth/users/${email}/vault-key-info`);
-      console.log(fetchedUser)
+      
       
       if(fetchedUser.data.vaultKeyInfo) {
         const { salt, iv, encryptedVaultKey } = fetchedUser.data.vaultKeyInfo;
@@ -78,6 +78,7 @@ const SignIn = () => {
       setLoading(false);
       if(error.status == 401) return toast.error("Something went wrong")
       toast.error("Invalid Credentials");
+    console.log(error);
     }
 
   };
