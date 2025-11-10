@@ -7,127 +7,111 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-// ========================
-// Auth-related Models
-// ========================
-
-
 model User {
-  // User info
-  id                     String    @id @default(uuid())  // Internal UUID
-  email                  String    @unique               // User's email
-  password               String                          // Auth password
-  name                   String?                         // User's name
-  photo                  String?                         // User's photo
-
-  salt                   String                          // 32-byte base64-encoded salt
-  iv                     String                          // 12-byte IV (base64 or utf-8)
-  encryptedVaultKey      String                          // Encrypted vault key (base64)
-
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
-  // Relations
-  passwordEntries   PasswordEntry[]
-  twoFAEntries      TwoFAEntry[]
-  emailEntries      EmailEntry[]
-  noteEntries       NoteEntry[]
-  cardEntries       CardEntry[]
+  id                 String             @id @default(uuid())
+  email              String             @unique
+  name               String?
+  salt               String
+  iv                 String
+  encryptedVaultKey  String
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  photo              String?
+  password           String
   bankAccountEntries BankAccountEntry[]
-  identityEntries   IdentityEntry[]
+  cardEntries        CardEntry[]
+  emailEntries       EmailEntry[]
+  identityEntries    IdentityEntry[]
+  noteEntries        NoteEntry[]
+  passwordEntries    PasswordEntry[]
+  twoFAEntries       TwoFAEntry[]
 }
 
-// ========================
-// Vault-related Models
-// ========================
-
 model PasswordEntry {
-  id               String   @id @default(uuid())
-  userId           String
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name             String
-  username         String
-  url              String?
-  encryptedSecret  String   // encrypted password (base64 or hex)
-  iv               String   // iv used to encrypt this password
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id              String   @id @default(uuid())
+  userId          String
+  name            String
+  username        String
+  url             String?
+  encryptedSecret String
+  iv              String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model EmailEntry {
-  id               String   @id @default(uuid())
-  userId           String
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  email            String
-  username         String
-  encryptedSecret  String  
-  iv               String   
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id              String   @id @default(uuid())
+  userId          String
+  email           String
+  username        String
+  encryptedSecret String
+  iv              String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model TwoFAEntry {
-  id               String   @id @default(uuid())
-  userId           String
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  title            String
-  issuer           String
-  accountName      String
-  encryptedSecret  String   // encrypted TOTP secret
-  iv               String   // iv used to encrypt the secret
-  notes            String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id              String   @id @default(uuid())
+  userId          String
+  title           String
+  issuer          String
+  accountName     String
+  encryptedSecret String
+  iv              String
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model NoteEntry {
-  id               String   @id @default(uuid())
-  userId           String
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  title            String
-  encryptedSecret  String   
-  iv               String   
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id              String   @id @default(uuid())
+  userId          String
+  title           String
+  encryptedSecret String
+  iv              String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model CardEntry {
-  id             String   @id @default(uuid())
-  userId         String
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  brand          String?  // e.g., Visa, Mastercard, optional plaintext for filtering
-  encryptedData  String   // JSON string containing last4, expMonth, expYear, cardholderName
-  iv             String   // IV used to encrypt this data
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id            String   @id @default(uuid())
+  userId        String
+  brand         String?
+  encryptedData String
+  iv            String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model BankAccountEntry {
-  id               String   @id @default(uuid())
-  userId           String
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  bankName         String
-  routingNumber    String?
-  accountType      String?
-  encryptedSecret  String   // encrypted account number
-  iv               String   // iv used to encrypt account number
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id              String   @id @default(uuid())
+  userId          String
+  bankName        String
+  routingNumber   String?
+  accountType     String?
+  encryptedSecret String
+  iv              String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model IdentityEntry {
-  id               String   @id @default(uuid())
-  userId           String
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  firstName        String
-  lastName         String
-  email            String?
-  phone            String?
-  address          String?
-  encryptedSecret  String   // encrypted SSN
-  iv               String   // iv used to encrypt SSN
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id              String   @id @default(uuid())
+  userId          String
+  firstName       String
+  lastName        String
+  email           String?
+  phone           String?
+  address         String?
+  encryptedSecret String
+  iv              String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
