@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import { config } from './config/config';
 import authRoutes from './routes/authRoute';
@@ -22,5 +22,18 @@ app.use(cors({
 app.use(authRoutes);
 app.use(vaultRoutes);
 app.use(userRoutes);
+
+// ❗ Catch-all route for undefined endpoints
+app.use((req: Request, res: Response) => {
+    res.status(404).json({ error: 'Not Found' });
+});
+
+// ❗ Error-handling middleware
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    console.error('Express error:', err);  // Logs to Vercel
+    const status = err.status || 500;
+    const message = err.message || 'Internal Server Error';
+    res.status(status).json({ error: message });
+});
 
 export default app;
