@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { config } from "../config/config";
-import { JwtUser } from "../types/types";
+import { config } from "../config/config.js";
+import { JwtUser } from "../types/types.js";
 import { jwtVerify } from "jose";
 
 

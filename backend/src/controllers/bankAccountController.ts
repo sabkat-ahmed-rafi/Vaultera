@@ -4,7 +4,7 @@ import {
   createBankAccountEntry,
   updateBankAccountEntry,
   deleteBankAccountEntry,
-} from "../service/bankAccountService";
+} from "../service/bankAccountService.js";
 
 export const getBankAccounts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {

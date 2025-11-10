@@ -1,5 +1,5 @@
-import { prisma } from "../config/prismaClient";
-import { CreateEmailEntryInput, UpdateEmailEntryInput } from "../types/types";
+import { prisma } from "../config/prismaClient.js";
+import { CreateEmailEntryInput, UpdateEmailEntryInput } from "../types/types.js";
 
 
 export const listEmailEntries = async (userId: string) => {

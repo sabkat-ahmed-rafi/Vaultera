@@ -1,5 +1,5 @@
-import { prisma } from "../config/prismaClient";
-import { CreateCardEntryInput, UpdateCardEntryInput } from "../types/types";
+import { prisma } from "../config/prismaClient.js";
+import { CreateCardEntryInput, UpdateCardEntryInput } from "../types/types.js";
 
 // List all cards for a user
 export const listCardEntries = async (userId: string) => {

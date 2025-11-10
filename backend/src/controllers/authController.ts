@@ -6,8 +6,8 @@ import {
   getUserVaultKeyInfo, 
   checkAuthUser, 
   generateJwtToken 
-} from '../service/authService';
-import { hashPassword } from '../utils/hashPassword';
+} from '../service/authService.js';
+import { hashPassword } from '../utils/hashPassword.js';
 
 
 

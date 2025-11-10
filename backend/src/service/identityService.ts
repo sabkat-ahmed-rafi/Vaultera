@@ -1,4 +1,4 @@
-import { prisma } from "../config/prismaClient";
+import { prisma } from "../config/prismaClient.js";
 
 export type CreateIdentityEntryInput = {
   userId: string;

@@ -4,7 +4,7 @@ import {
   createCardEntry,
   updateCardEntry,
   deleteCardEntry,
-} from "../service/cardService";
+} from "../service/cardService.js";
 
 export const getCards = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {

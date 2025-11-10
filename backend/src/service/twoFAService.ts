@@ -1,5 +1,5 @@
-import { prisma } from "../config/prismaClient";
-import { CreateTwoFAEntryInput } from "../types/types";
+import { prisma } from "../config/prismaClient.js";
+import { CreateTwoFAEntryInput } from "../types/types.js";
 
 export const listTwoFAEntries = async (userId: string) => {
   return prisma.twoFAEntry.findMany({ where: { userId }, orderBy: { createdAt: "desc" } });

@@ -4,7 +4,7 @@ import {
   createPasswordEntry,
   updatePasswordEntry,
   deletePasswordEntry,
-} from "../service/passwordService";
+} from "../service/passwordService.js";
 
 
 export const getPasswords = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

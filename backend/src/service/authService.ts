@@ -1,7 +1,7 @@
 import { SignJWT } from "jose";
-import { config } from "../config/config";
-import { prisma } from "../config/prismaClient";
-import { GetUserByEmailProp, JwtUser, UserData } from "../types/types";
+import { config } from "../config/config.js";
+import { prisma } from "../config/prismaClient.js";
+import { GetUserByEmailProp, JwtUser, UserData } from "../types/types.js";
 
 const getUserByEmail = async ({ email }: GetUserByEmailProp) => {
   return await prisma.user.findUnique({

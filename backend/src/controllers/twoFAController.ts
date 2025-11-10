@@ -3,7 +3,7 @@ import {
   listTwoFAEntries,
   createTwoFAEntry,
   deleteTwoFAEntry,
-} from "../service/twoFAService";
+} from "../service/twoFAService.js";
 
 
 export const getTwoFA = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

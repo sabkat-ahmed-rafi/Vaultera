@@ -1,5 +1,5 @@
-import { prisma } from "../config/prismaClient";
-import { CreateNoteEntryInput, UpdateNoteEntryInput } from "../types/types";
+import { prisma } from "../config/prismaClient.js";
+import { CreateNoteEntryInput, UpdateNoteEntryInput } from "../types/types.js";
 
 export const listNoteEntries = async (userId: string) => {
   return prisma.noteEntry.findMany({ where: { userId }, orderBy: { createdAt: "desc" } });

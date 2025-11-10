@@ -4,7 +4,7 @@ import {
   createNoteEntry,
   updateNoteEntry,
   deleteNoteEntry,
-} from "../service/noteService";
+} from "../service/noteService.js";
 
 
 export const getNotes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

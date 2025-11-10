@@ -1,9 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
-import { config } from './config/config';
-import authRoutes from './routes/authRoute';
-import vaultRoutes from './routes/vaultRoute';
-import userRoutes from './routes/userRoute';
+import { config } from './config/config.js';
+import authRoutes from './routes/authRoute.js';
+import vaultRoutes from './routes/vaultRoute.js';
+import userRoutes from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
 
 

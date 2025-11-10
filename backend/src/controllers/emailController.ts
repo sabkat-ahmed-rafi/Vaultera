@@ -4,7 +4,7 @@ import {
   createEmailEntry,
   updateEmailEntry,
   deleteEmailEntry,
-} from "../service/emailService";
+} from "../service/emailService.js";
 
 
 export const getEmails = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

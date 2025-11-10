@@ -6,8 +6,8 @@ import {
     checkSession,
     removeJwt,
     setJwt 
-} from "../controllers/authController";
-import { verifyToken } from "../middleware/verifyToken";
+} from "../controllers/authController.js";
+import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = Router();
 

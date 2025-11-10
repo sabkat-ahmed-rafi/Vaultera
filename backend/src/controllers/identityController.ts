@@ -4,7 +4,7 @@ import {
   createIdentityEntry,
   updateIdentityEntry,
   deleteIdentityEntry,
-} from "../service/identityService";
+} from "../service/identityService.js";
 
 export const getIdentities = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {

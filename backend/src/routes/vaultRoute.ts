@@ -1,52 +1,52 @@
 import { Router } from "express";
-import { verifyToken } from "../middleware/verifyToken";
+import { verifyToken } from "../middleware/verifyToken.js";
 import { 
   postEmail, 
   putEmail, 
   removeEmail, 
   getEmails 
-} from './../controllers/emailController';
+} from './../controllers/emailController.js';
 
 import { 
   getTwoFA, 
   postTwoFA, 
   removeTwoFA
-} from "../controllers/twoFAController";
+} from "../controllers/twoFAController.js";
 
 import { 
   getPasswords,
   postPassword, 
   putPassword,
   removePassword,
-} from "../controllers/passwordController";
+} from "../controllers/passwordController.js";
 
 import { 
   getNotes, 
   postNote, 
   putNote, 
   removeNote
-} from '../controllers/noteController';
+} from '../controllers/noteController.js';
 
 import { 
   getCards, 
   postCard, 
   putCard, 
   removeCard 
-} from "../controllers/cardController";
+} from "../controllers/cardController.js";
 
 import { 
   getBankAccounts, 
   postBankAccount, 
   putBankAccount, 
   removeBankAccount 
-} from "../controllers/bankAccountController";
+} from "../controllers/bankAccountController.js";
 
 import { 
   getIdentities, 
   postIdentity, 
   putIdentity, 
   removeIdentity 
-} from "../controllers/identityController";
+} from "../controllers/identityController.js";
 
 const router = Router();
 

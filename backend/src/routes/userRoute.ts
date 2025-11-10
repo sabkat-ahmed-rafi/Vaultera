@@ -1,7 +1,6 @@
-// src/routes/userRoutes.ts
 import express from "express";
-import { getCurrentUser, updateProfile } from "../controllers/userController";
-import { verifyToken } from "../middleware/verifyToken";
+import { getCurrentUser, updateProfile } from "../controllers/userController.js";
+import { verifyToken } from "../middleware/verifyToken.js";
 
 
 const router = express.Router();

@@ -1,5 +1,5 @@
-import { prisma } from "../config/prismaClient";
-import { CreatePasswordEntryInput, UpdatePasswordEntryInput } from "../types/types";
+import { prisma } from "../config/prismaClient.js";
+import { CreatePasswordEntryInput, UpdatePasswordEntryInput } from "../types/types.js";
 
 export const listPasswordEntries = async (userId: string) => {
   return prisma.passwordEntry.findMany({ where: { userId }, orderBy: { createdAt: "desc" } });
