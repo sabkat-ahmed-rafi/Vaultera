@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc && mkdir -p api && cp dist/api/index.js api/index.js",
+    "build": "tsc",
     "start": "node dist/api/index.js",
     "postinstall": "prisma generate"
   },
