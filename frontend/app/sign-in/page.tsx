@@ -76,9 +76,9 @@ const SignIn = () => {
       
     } catch (error: any) {
       setLoading(false);
+      console.log(error);
       if(error.status == 401) return toast.error("Something went wrong")
       toast.error("Invalid Credentials");
-    console.log(error);
     }
 
   };
