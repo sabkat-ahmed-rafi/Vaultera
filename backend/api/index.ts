@@ -1,6 +1,4 @@
 import app from '../src/app.js';
-import { VercelRequest, VercelResponse } from '@vercel/node';
+import serverless from 'serverless-http';
 
-export default (req: VercelRequest, res: VercelResponse) => {
-  app(req, res);
-};
+export default serverless(app);
