@@ -23,22 +23,6 @@ app.use('/auth', authRoutes);
 app.use('/vault', vaultRoutes);
 app.use('/users', userRoutes);
 
-app.use((req, res) => {
-    res.status(404).json({ error: 'Not Found' });
-});
-
-interface AppError {
-    status?: number;
-    message?: string;
-    [key: string]: unknown;
-}
-
-app.use((err: unknown, req: Request, res: Response, next: NextFunction): void => {
-    console.error('Express error:', err);
-    if (res.headersSent) return; // prevent hanging
-    const appErr = err as AppError;
-    res.status(appErr?.status || 500).json({ error: appErr?.message || 'Internal Server Error' });
-});
 
 
 export default app;
