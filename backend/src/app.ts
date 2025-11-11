@@ -23,6 +23,19 @@ app.use('/auth', authRoutes);
 app.use('/vault', vaultRoutes);
 app.use('/users', userRoutes);
 
+// Catch-all 404
+app.use((_req: Request, res: Response): void => {
+    res.status(404).json({ error: 'Not Found' });
+});
+
+// Error handler
+app.use((err: any, _req: Request, res: Response, _next: NextFunction): void => {
+    console.error('Express error:', err);
+    if (res.headersSent) return;
+    const status = typeof err?.status === 'number' ? err.status : 500;
+    const message = err?.message || 'Internal Server Error';
+    res.status(status).json({ error: message });
+});
 
 
 export default app;

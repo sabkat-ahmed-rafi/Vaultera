@@ -18,7 +18,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
         const { payload } = await jwtVerify(token, secret);
 
         req.user = payload as JwtUser;
-        next();
+        return next();
 
     } catch (error: any) {
         if (error.name === "JWTExpired") {
