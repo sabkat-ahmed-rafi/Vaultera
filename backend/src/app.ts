@@ -19,9 +19,9 @@ app.use(cors({
 }))
 
 // Routes
-app.use('/auth', authRoutes);
-app.use('/vault', vaultRoutes);
-app.use('/users', userRoutes);
+app.use(authRoutes);
+app.use(vaultRoutes);
+app.use(userRoutes);
 
 // ❗ Catch-all route for undefined endpoints
 app.use((req: Request, res: Response) => {

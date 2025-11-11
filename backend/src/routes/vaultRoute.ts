@@ -50,48 +50,47 @@ import {
 
 const router = Router();
 
-router.use(verifyToken);
 
 // Password entries
-router.get('/passwords', getPasswords);
-router.post('/passwords', postPassword);
-router.put('/passwords/:id', putPassword);
-router.delete('/passwords/:id', removePassword);
+router.get('/vault/passwords', verifyToken, getPasswords);
+router.post('/vault/passwords', verifyToken, postPassword);
+router.put('/vault/passwords/:id', verifyToken, putPassword);
+router.delete('/vault/passwords/:id', verifyToken, removePassword);
 
 // Email entries
-router.get('/emails', getEmails);
-router.post('/emails', postEmail);
-router.put('/emails/:id', putEmail);
-router.delete('/emails/:id', removeEmail);
+router.get('/vault/emails', verifyToken, getEmails);
+router.post('/vault/emails', verifyToken, postEmail);
+router.put('/vault/emails/:id', verifyToken, putEmail);
+router.delete('/vault/emails/:id', verifyToken, removeEmail);
 
 // 2FA entries
-router.get('/2fa', getTwoFA);
-router.post('/2fa', postTwoFA);
-router.delete('/2fa/:id', removeTwoFA);
+router.get('/vault/2fa', verifyToken, getTwoFA);
+router.post('/vault/2fa', verifyToken, postTwoFA);
+router.delete('/vault/2fa/:id', verifyToken, removeTwoFA);
 
 // Note entries
-router.get('/notes', getNotes);
-router.post('/notes', postNote);
-router.put('/notes/:id', putNote);
-router.delete('/notes/:id', removeNote);
+router.get('/vault/notes', verifyToken, getNotes);
+router.post('/vault/notes', verifyToken, postNote);
+router.put('/vault/notes/:id', verifyToken, putNote);
+router.delete('/vault/notes/:id', verifyToken, removeNote);
 
 // Card entries
-router.get('/cards', getCards);
-router.post('/cards', postCard);
-router.put('/cards/:id', putCard);
-router.delete('/cards/:id', removeCard);
+router.get('/vault/cards', verifyToken, getCards);
+router.post('/vault/cards', verifyToken, postCard);
+router.put('/vault/cards/:id', verifyToken, putCard);
+router.delete('/vault/cards/:id', verifyToken, removeCard);
 
 // Bank Account entries
-router.get('/bank-accounts', getBankAccounts);
-router.post('/bank-accounts', postBankAccount);
-router.put('/bank-accounts/:id', putBankAccount);
-router.delete('/bank-accounts/:id', removeBankAccount);
+router.get('/vault/bank-accounts', verifyToken, getBankAccounts);
+router.post('/vault/bank-accounts', verifyToken, postBankAccount);
+router.put('/vault/bank-accounts/:id', verifyToken, putBankAccount);
+router.delete('/vault/bank-accounts/:id', verifyToken, removeBankAccount);
 
 // Identity entries
-router.get('/identities', getIdentities);
-router.post('/identities', postIdentity);
-router.put('/identities/:id', putIdentity);
-router.delete('/identities/:id', removeIdentity);
+router.get('/vault/identities', verifyToken, getIdentities);
+router.post('/vault/identities', verifyToken, postIdentity);
+router.put('/vault/identities/:id', verifyToken, putIdentity);
+router.delete('/vault/identities/:id', verifyToken, removeIdentity);
 
 
 
