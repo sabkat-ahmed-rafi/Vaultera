@@ -8,9 +8,20 @@ import {
     setJwt 
 } from '../src/controllers/authController.js';
 import { verifyToken } from '../src/middleware/verifyToken.js';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import { config } from '../src/config/config.js';
 
 const app = express();
 app.use(express.json());
+
+// Middlewares
+app.use(cookieParser());
+app.use(express.json());
+app.use(cors({
+  origin: config.frontend,
+  credentials: true,
+}));
 
 // User Authentication
 app.post('/auth/sign-up', createUser);

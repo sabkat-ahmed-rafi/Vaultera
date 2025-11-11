@@ -21,9 +21,20 @@ import {
 import { 
   getIdentities, postIdentity, putIdentity, removeIdentity 
 } from '../src/controllers/identityController.js';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import { config } from '../src/config/config.js';
 
 const app = express();
 app.use(express.json());
+
+// Middlewares
+app.use(cookieParser());
+app.use(express.json());
+app.use(cors({
+  origin: config.frontend,
+  credentials: true,
+}));
 
 // Attach verifyToken individually for each route
 // Password entries
