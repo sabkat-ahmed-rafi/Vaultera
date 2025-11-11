@@ -22,7 +22,7 @@ export default function ProfileUpdateCard() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axiosSecure.get("/api/user/me");
+        const res = await axiosSecure.get("/api/users/me");
         const user = res.data;
         setCurrentUser(user);
         setName(user.name);
@@ -75,7 +75,7 @@ export default function ProfileUpdateCard() {
         return;
       }
 
-      await axiosSecure.put("/api/user/update-profile", payload);
+      await axiosSecure.put("/api/users/update-profile", payload);
 
       // Update UI
       setCurrentUser((prev) => (prev ? { ...prev, ...payload } : null));
