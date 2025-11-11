@@ -19,9 +19,9 @@ app.use(cors({
 }))
 
 // Routes
-app.use('/auth', authRoutes);
-app.use('/vault', vaultRoutes);
-app.use('/users', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/vault', vaultRoutes);
+app.use('/api/users', userRoutes);
 
 app.use((req, res, next) => {
   console.log('👉 Express received:', req.method, req.url);
