@@ -23,6 +23,10 @@ app.use('/auth', authRoutes);
 app.use('/vault', vaultRoutes);
 app.use('/users', userRoutes);
 
+app.use((req, res, next) => {
+  console.log('👉 Express received:', req.method, req.url);
+  next();
+});
 
 
 // Error handler
