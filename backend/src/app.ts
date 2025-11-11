@@ -23,17 +23,22 @@ app.use('/auth', authRoutes);
 app.use('/vault', vaultRoutes);
 app.use('/users', userRoutes);
 
-// ❗ Catch-all route for undefined endpoints
-app.use((req: Request, res: Response) => {
+app.use((req, res) => {
     res.status(404).json({ error: 'Not Found' });
 });
 
-// ❗ Error-handling middleware
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    console.error('Express error:', err);  // Logs to Vercel
-    const status = err.status || 500;
-    const message = err.message || 'Internal Server Error';
-    res.status(status).json({ error: message });
+interface AppError {
+    status?: number;
+    message?: string;
+    [key: string]: unknown;
+}
+
+app.use((err: unknown, req: Request, res: Response, next: NextFunction): void => {
+    console.error('Express error:', err);
+    if (res.headersSent) return; // prevent hanging
+    const appErr = err as AppError;
+    res.status(appErr?.status || 500).json({ error: appErr?.message || 'Internal Server Error' });
 });
+
 
 export default app;
