@@ -1,6 +1,9 @@
-import app from '../src/app.js';  // your main Express app
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import serverless from 'serverless-http';
+import app from '../src/app.js';
 
-export default (req: VercelRequest, res: VercelResponse) => {
-  app(req as any, res as any);
-};
+const handler = serverless(app);
+
+export default async function (req: VercelRequest, res: VercelResponse) {
+  return handler(req as any, res as any);
+}
